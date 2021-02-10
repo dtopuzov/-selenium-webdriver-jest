@@ -4,16 +4,10 @@ Spike for e2e test automation with Jest and Selenium
 
 ## Execute Tests
 
-Run all tests:
+Run tests:
 
 ```bash
-npx jest
-```
-
-Run single spec:
-
-```bash
-npx jest tests/inputs/overview.tests.ts
+npx jest tests/vue
 ```
 
 Hints:
