@@ -17,6 +17,10 @@ export class Settings {
     }
 
     public static get baseUrl(): string {
-        return process.env["BASE_URL"] || "https://www.telerik.com/kendo-vue-ui/components/";
+        return process.env["BASE_URL"] || "https://www.telerik.com/kendo-angular-ui/components/";
+    }
+
+    public static get timeout(): number {
+        return +process.env["TIMEOUT"] || 10000;
     }
 }

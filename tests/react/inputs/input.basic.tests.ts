@@ -1,12 +1,13 @@
 import { By } from "selenium-webdriver";
-import { Browser } from "../../../src/browser";
+import { Browser } from "../../../src/selenium/browser";
+import { Settings } from "../../../src/settings/Settings";
 
 describe("Inputs Overview", () => {
     let browser: Browser;
 
     beforeAll(async () => {
         browser = await new Browser();
-        await browser.navigateTo("inputs/examples/input/basic");
+        await browser.navigateTo(Settings.baseUrl + "inputs/examples/input/basic");
     });
 
     afterEach(async () => {

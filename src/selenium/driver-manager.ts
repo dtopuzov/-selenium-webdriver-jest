@@ -2,7 +2,7 @@ import { Browser, Builder, logging, ThenableWebDriver } from "selenium-webdriver
 import { Options as ChromeOptions } from "selenium-webdriver/chrome";
 import { Options as FirefoxOptions, ServiceBuilder as FirefoxServiceBuilder } from "selenium-webdriver/firefox";
 import { Options as SafariOptions } from "selenium-webdriver/safari";
-import { Settings } from "./settings";
+import { Settings } from "../settings/settings";
 
 export class DriverManager {
 

@@ -1,8 +1,8 @@
 import AxeBuilder from "@axe-core/webdriverjs";
-import { By, ThenableWebDriver, until, WebElement, WebElementCondition } from "selenium-webdriver";
+import { By, Condition, ThenableWebDriver, until, WebElement } from "selenium-webdriver";
 import { Level, Type } from "selenium-webdriver/lib/logging";
+import { EC } from "./conditions";
 import { DriverManager } from "./driver-manager";
-import { Settings } from "./settings";
 
 export class Browser {
     public driver: ThenableWebDriver;
@@ -16,11 +16,7 @@ export class Browser {
     }
 
     public async navigateTo(url: string): Promise<void> {
-        if (Settings.baseUrl != undefined) {
-            await this.driver.navigate().to(Settings.baseUrl + url);
-        } else {
-            await this.driver.navigate().to(url);
-        }
+        await this.driver.navigate().to(url);
     }
 
     public async refresh(): Promise<void> {
@@ -40,11 +36,35 @@ export class Browser {
         return element;
     }
 
-    public async wait(condition: () => Promise<boolean> | WebElementCondition, timeout = 10000, message = undefined): Promise<void> {
+    public async findChild(rootElement: WebElement, locator: By, timeout = 10000): Promise<WebElement> {
+        await this.wait(EC.hasChild(rootElement, locator), timeout, `Failed to find child element located by ${locator}.`);
+        return rootElement.findElement(locator);
+    }
+
+    public async type(element: WebElement, text: string, clear = true): Promise<void> {
+        if (clear) {
+            await element.clear();
+        }
+        await element.sendKeys(text);
+    }
+
+    public async sendKey(key: string): Promise<void> {
+        await this.driver.actions().sendKeys(key).perform();
+    }
+
+    public async sendKeyCombination(key1: string, key2: string): Promise<void> {
+        await this.driver.actions().keyDown(key1).keyDown(key2).keyUp(key2).keyUp(key1).perform();
+    }
+
+    public async getFocusedElement(): Promise<WebElement> {
+        return await this.driver.switchTo().activeElement();
+    }
+
+    public async wait(condition: () => Promise<boolean> | Condition<boolean>, timeout = 10000, message = undefined): Promise<void> {
         await this.driver.wait(condition, timeout, message);
     }
 
-    public async waitSafely(condition: () => Promise<boolean> | WebElementCondition, timeout = 10000): Promise<boolean> {
+    public async waitSafely(condition: () => Promise<boolean> | Condition<boolean>, timeout = 10000): Promise<boolean> {
         try {
             await this.driver.wait(condition, timeout);
             return true;

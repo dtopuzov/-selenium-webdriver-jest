@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/webdriverjs';
 import { By } from "selenium-webdriver";
-import { Browser } from "../../src/browser";
+import { Browser } from '../../src/selenium/browser';
 
 describe("Framework Examples", () => {
     let browser: Browser;

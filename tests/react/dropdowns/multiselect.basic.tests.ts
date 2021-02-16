@@ -1,5 +1,5 @@
 import { By } from "selenium-webdriver";
-import { Browser } from "../../../src/browser";
+import { Browser } from "../../../src/selenium/browser";
 
 describe("MultiSelect Basic", () => {
     let browser: Browser;
