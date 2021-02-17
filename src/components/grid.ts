@@ -13,21 +13,29 @@ export class Grid extends UIComponent {
         return new Pager(this.driver, By.css(".k-grid-pager"));
     }
 
+    public async Header(column: number): Promise<WebElement> {
+        let locator = By.css(`thead tr th:nth-of-type(${column})`);
+        return await this.GetGridElement(locator, `Failed to find header at column ${column}.`);
+    }
+
+    public async HeaderCell(column: number): Promise<WebElement> {
+        let locator = By.css(`thead tr td:nth-of-type(${column})`);
+        return await this.GetGridElement(locator, `Failed to find header cell at column ${column}.`);
+    }
+
     public async Cell(row: number, column: number): Promise<WebElement> {
-        let cellLocator = By.css(`tr:nth-of-type(${row}) td[role='gridcell']:nth-of-type(${column})`);
-        let element = await this.getElement();
-        await this.driver.wait(EC.hasChild(element, cellLocator)
-            , Settings.timeout
-            , `Failed to find cell at {${row}, ${column}}.`);
-        return await element.findElement(cellLocator);
+        let locator = By.css(`tr:nth-of-type(${row}) td[role='gridcell']:nth-of-type(${column})`);
+        return await this.GetGridElement(locator, `Failed to find cell at {${row}, ${column}}.`);
     }
 
     public async CellInput(row: number, column: number): Promise<WebElement> {
-        let cellLocator = By.css(`tr:nth-of-type(${row}) td[role='gridcell']:nth-of-type(${column}) input`);
-        let element = await this.getElement();
-        await this.driver.wait(EC.hasChild(element, cellLocator)
-            , Settings.timeout
-            , `Failed to find input inside cell at {${row}, ${column}}.`);
-        return await element.findElement(cellLocator);
+        let locator = By.css(`tr:nth-of-type(${row}) td[role='gridcell']:nth-of-type(${column}) input`);
+        return await this.GetGridElement(locator, `Failed to find input at cell {${row}, ${column}}.`);
+    }
+
+    private async GetGridElement(locator: By, error: string) {
+        let rootElement = await this.getElement();
+        await this.driver.wait(EC.hasChild(rootElement, locator), Settings.timeout, error);
+        return await rootElement.findElement(locator);
     }
 }

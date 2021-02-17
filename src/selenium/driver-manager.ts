@@ -23,7 +23,7 @@ export class DriverManager {
     private getChromeDriver(): ThenableWebDriver {
         require("chromedriver");
         const options = new ChromeOptions();
-        options.addArguments(`--window-size=${Settings.browserWidth},${Settings.browserWidth}`)
+        options.addArguments(`--window-size=${Settings.browserWidth},${Settings.browserHeight}`)
         if (Settings.headless) {
             options.headless();
         }

@@ -21,6 +21,6 @@ export class Settings {
     }
 
     public static get timeout(): number {
-        return +process.env["TIMEOUT"] || 10000;
+        return +process.env["TIMEOUT"] || 20000;
     }
 }

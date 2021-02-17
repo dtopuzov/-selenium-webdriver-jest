@@ -46,9 +46,49 @@ describe("Grid Keyboard Navigation Basic", () => {
     });
 
     it("left/right arrow in left/right-most cell", async () => {
+        let cell = await grid.Cell(2, 1);
+        cell.click();
+        await browser.wait(EC.hasFocus(cell), Settings.timeout, "Focus not set on click.");
+
+        await browser.sendKey(Key.ARROW_LEFT);
+        await browser.sleep(250); // Give it some time in case it fails
+        await browser.wait(EC.hasFocus(await grid.Cell(2, 1)));
+
+        cell = await grid.Cell(2, 3);
+        cell.click();
+        await browser.wait(EC.hasFocus(cell), Settings.timeout, "Focus not set on click.");
+
+        await browser.sendKey(Key.ARROW_RIGHT);
+        await browser.sleep(250); // Give it some time in case it fails
+        await browser.wait(EC.hasFocus(await grid.Cell(2, 3)));
     });
 
-    it("up/down arrow in top/bottom-most cell", async () => {
+    it("up arrow in top-most cell", async () => {
+        let cell = await grid.Cell(1, 1);
+        cell.click();
+        await browser.wait(EC.hasFocus(cell), Settings.timeout, "Focus not set on click.");
+
+        await browser.sendKey(Key.ARROW_UP);
+        await browser.wait(EC.hasFocus(await grid.HeaderCell(1)));
+        await browser.sendKey(Key.ARROW_UP);
+        await browser.wait(EC.hasFocus(await grid.Header(1)));
+        await browser.sendKey(Key.ARROW_UP);
+        await browser.sleep(250); // Give it some time in case it fails
+        await browser.wait(EC.hasFocus(await grid.Header(1)));
+    });
+
+    it("down arrow in bottom-most cell", async () => {
+        let cell = await grid.Cell(8, 1);
+        cell.click();
+        await browser.wait(EC.hasFocus(cell), Settings.timeout, "Focus not set on click.");
+
+        await browser.sendKey(Key.ARROW_DOWN);
+        await browser.wait(EC.hasFocus(await grid.Cell(9, 1)));
+        await browser.sendKey(Key.ARROW_DOWN);
+        await browser.wait(EC.hasFocus(await grid.Cell(10, 1)));
+        await browser.sendKey(Key.ARROW_DOWN);
+        await browser.sleep(250); // Give it some time in case it fails
+        await browser.wait(EC.hasFocus(await grid.Cell(10, 1)));
     });
 
     it("page up/down navigation", async () => {
