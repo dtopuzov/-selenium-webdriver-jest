@@ -56,8 +56,16 @@ export class Browser {
         await this.driver.actions().keyDown(key1).keyDown(key2).keyUp(key2).keyUp(key1).perform();
     }
 
-    public async getFocusedElement(): Promise<WebElement> {
-        return await this.driver.switchTo().activeElement();
+    public async hasFocus(element: WebElement): Promise<boolean> {
+        return await this.waitSafely(EC.hasFocus(element));
+    }
+
+    public async hasText(element: WebElement, text: string): Promise<boolean> {
+        return await this.waitSafely(EC.hasText(element, text));
+    }
+
+    public async hasValue(element: WebElement, value: string): Promise<boolean> {
+        return await this.waitSafely(EC.hasValue(element, value));
     }
 
     public async wait(condition: () => Promise<boolean> | Condition<boolean>, timeout = 10000, message = undefined): Promise<void> {

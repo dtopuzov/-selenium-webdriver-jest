@@ -1,15 +1,14 @@
 import { Browser } from "../../../../src/selenium/browser";
 import { Settings } from "../../../../src/settings/settings";
 import { Grid } from "../../../../src/components/grid";
-import { EC } from "../../../../src/selenium/conditions";
 import { Key } from "selenium-webdriver";
 
 describe("Grid Keyboard Navigation Basic", () => {
     let browser: Browser;
     let grid: Grid;
 
-    beforeAll(async () => {
-        browser = await new Browser();
+    beforeAll(() => {
+        browser = new Browser();
     });
 
     beforeEach(async () => {
@@ -27,91 +26,109 @@ describe("Grid Keyboard Navigation Basic", () => {
 
     it("arrow navigation in each direction", async () => {
         let cell = await grid.Cell(1, 1);
-        await browser.wait(EC.hasText(cell, "1"), Settings.timeout, "Wrong initial state of the grid.");
-
         cell.click();
-        await browser.wait(EC.hasFocus(cell), Settings.timeout, "Focus not set on click.");
+        expect(await browser.hasFocus(cell)).toBe(true);
 
         await browser.sendKey(Key.ARROW_RIGHT);
-        await browser.wait(EC.hasFocus(await grid.Cell(1, 2)));
+        expect(await browser.hasFocus(await grid.Cell(1, 2))).toBe(true);
 
         await browser.sendKey(Key.ARROW_DOWN);
-        await browser.wait(EC.hasFocus(await grid.Cell(2, 2)));
+        expect(await browser.hasFocus(await grid.Cell(2, 2))).toBe(true);
 
         await browser.sendKey(Key.ARROW_LEFT);
-        await browser.wait(EC.hasFocus(await grid.Cell(2, 1)));
+        expect(await browser.hasFocus(await grid.Cell(2, 1))).toBe(true);
 
         await browser.sendKey(Key.ARROW_UP);
-        await browser.wait(EC.hasFocus(await grid.Cell(1, 1)));
+        expect(await browser.hasFocus(await grid.Cell(1, 1))).toBe(true);
     });
 
     it("left/right arrow in left/right-most cell", async () => {
         let cell = await grid.Cell(2, 1);
         cell.click();
-        await browser.wait(EC.hasFocus(cell), Settings.timeout, "Focus not set on click.");
+        expect(await browser.hasFocus(cell)).toBe(true);
 
         await browser.sendKey(Key.ARROW_LEFT);
         await browser.sleep(250); // Give it some time in case it fails
-        await browser.wait(EC.hasFocus(await grid.Cell(2, 1)));
+        expect(await browser.hasFocus(cell)).toBe(true);
 
         cell = await grid.Cell(2, 3);
         cell.click();
-        await browser.wait(EC.hasFocus(cell), Settings.timeout, "Focus not set on click.");
+        expect(await browser.hasFocus(cell)).toBe(true);
 
         await browser.sendKey(Key.ARROW_RIGHT);
         await browser.sleep(250); // Give it some time in case it fails
-        await browser.wait(EC.hasFocus(await grid.Cell(2, 3)));
+        expect(await browser.hasFocus(cell)).toBe(true);
     });
 
     it("up arrow in top-most cell", async () => {
         let cell = await grid.Cell(1, 1);
         cell.click();
-        await browser.wait(EC.hasFocus(cell), Settings.timeout, "Focus not set on click.");
+        expect(await browser.hasFocus(cell)).toBe(true);
 
         await browser.sendKey(Key.ARROW_UP);
-        await browser.wait(EC.hasFocus(await grid.HeaderCell(1)));
+        expect(await browser.hasFocus(await grid.HeaderCell(1))).toBe(true);
+
         await browser.sendKey(Key.ARROW_UP);
-        await browser.wait(EC.hasFocus(await grid.Header(1)));
+        expect(await browser.hasFocus(await grid.Header(1))).toBe(true);
+
         await browser.sendKey(Key.ARROW_UP);
         await browser.sleep(250); // Give it some time in case it fails
-        await browser.wait(EC.hasFocus(await grid.Header(1)));
+        expect(await browser.hasFocus(await grid.Header(1))).toBe(true);
     });
 
     it("down arrow in bottom-most cell", async () => {
         let cell = await grid.Cell(8, 1);
         cell.click();
-        await browser.wait(EC.hasFocus(cell), Settings.timeout, "Focus not set on click.");
+        expect(await browser.hasFocus(cell)).toBe(true);
 
         await browser.sendKey(Key.ARROW_DOWN);
-        await browser.wait(EC.hasFocus(await grid.Cell(9, 1)));
+        expect(await browser.hasFocus(await grid.Cell(9, 1))).toBe(true);
+
         await browser.sendKey(Key.ARROW_DOWN);
-        await browser.wait(EC.hasFocus(await grid.Cell(10, 1)));
+        expect(await browser.hasFocus(await grid.Cell(10, 1))).toBe(true);
+
         await browser.sendKey(Key.ARROW_DOWN);
         await browser.sleep(250); // Give it some time in case it fails
-        await browser.wait(EC.hasFocus(await grid.Cell(10, 1)));
+        expect(await browser.hasFocus(await grid.Cell(10, 1))).toBe(true);
     });
 
     it("page up/down navigation", async () => {
-        /*
-        SHORTCUT	DESCRIPTION
-        Page Down	Scrolls to the next page of data. If paging is configured, loads the next page of data, if any.
-        Page Up	Scrolls to the previous page of data. If paging is configured, loads the previous page of data, if any.
-        */
+        let cell = await grid.Cell(2, 2);
+        expect(await browser.hasText(cell, "Chang")).toBe(true);
+        
+        cell.click();
+        expect(await browser.hasFocus(cell)).toBe(true);
+
+        await browser.sendKey(Key.PAGE_DOWN);
+        expect(await browser.hasText(await grid.Cell(2,2), "Queso Manchego La Pastora")).toBe(true);
+        expect(await browser.hasFocus(await grid.Header(1))).toBe(true);
+
+        await browser.sendKey(Key.PAGE_UP);
+        expect(await browser.hasText(await grid.Cell(2,2), "Chang")).toBe(true);
+        expect(await browser.hasFocus(await grid.Header(1))).toBe(true);
     });
 
     it("home/end navigation", async () => {
-        /*
-        SHORTCUT	DESCRIPTION
-        Home	Moves the focus to the first focusable cell in the row.
-        End	Moves the focus to the last focusable cell in the row.
-        */
+        let cell = await grid.Cell(2, 2);      
+        cell.click();
+        expect(await browser.hasFocus(cell)).toBe(true);
+
+        await browser.sendKey(Key.HOME);
+        expect(await browser.hasFocus(await grid.Cell(2,1))).toBe(true);
+
+        await browser.sendKey(Key.END);
+        expect(await browser.hasFocus(await grid.Cell(2,3))).toBe(true);
     });
 
     it("ctrl + home/end navigation", async () => {
-        /*
-        SHORTCUT	DESCRIPTION
-        Ctrl & Home	Moves the focus to the first cell in the first row.
-        Ctrl & End	Moves the focus to the last cell in the last row.
-        */
+        let cell = await grid.Cell(2, 2);      
+        cell.click();
+        expect(await browser.hasFocus(cell)).toBe(true);
+
+        await browser.sendKeyCombination(Key.CONTROL, Key.HOME);
+        expect(await browser.hasFocus(await grid.Header(1))).toBe(true);
+
+        await browser.sendKeyCombination(Key.CONTROL, Key.END);
+        expect(await browser.hasFocus(await grid.Cell(10,3))).toBe(true);
     });
 });

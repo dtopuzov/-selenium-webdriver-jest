@@ -1,5 +1,4 @@
 import { By, Key } from "selenium-webdriver";
-import { EC } from "../../../../src/selenium/conditions";
 import { Grid } from "../../../../src/components/grid";
 import { Browser } from "../../../../src/selenium/browser";
 import { Settings } from "../../../../src/settings/settings";
@@ -27,80 +26,80 @@ describe("Grid Keyboard Navigation InCell Tab", () => {
 
     it("tab should focus next cell", async () => {
         let cell = await grid.Cell(1, 1);
-        await browser.wait(EC.hasText(cell, "Chai"), Settings.timeout, "Wrong initial state of the grid.");
+        expect(await browser.hasText(cell, "Chai")).toBe(true);
 
         cell.click();
         let input = await grid.CellInput(1, 1);
         await browser.type(input, "Test");
-        await browser.wait(EC.hasValue(input, "Test"), Settings.timeout, "Failed to update input field inside cell.");
+        expect(await browser.hasValue(input, "Test")).toBe(true);
 
         await browser.sendKey(Key.TAB);
         input = await grid.CellInput(1, 2);
-        await browser.wait(EC.hasFocus(input), Settings.timeout, "Failed to focus next cell with tab key.");
+        expect(await browser.hasFocus(input)).toBe(true);
 
         cell = await grid.Cell(1, 1);
-        await browser.wait(EC.hasText(cell, "Test"), Settings.timeout, "Value in first cell not saved after hit TAB key.");
+        expect(await browser.hasText(cell, "Test")).toBe(true);
     });
 
     it("shift+tab should focus previous cell", async () => {
         let cell = await grid.Cell(1, 2);
-        await browser.wait(EC.hasText(cell, "18"), Settings.timeout, "Wrong initial state of the grid.");
+        expect(await browser.hasText(cell, "18")).toBe(true);
 
         cell.click();
         let input = await grid.CellInput(1, 2);
-        await browser.wait(EC.hasFocus(input), Settings.timeout, "Input not focused when click on cell.");
+        expect(await browser.hasFocus(input)).toBe(true);
 
         await browser.sendKeyCombination(Key.SHIFT, Key.TAB);
         input = await grid.CellInput(1, 1);
-        await browser.wait(EC.hasFocus(input), Settings.timeout, "Failed to focus input of previous cell with shift+tab.");
+        expect(await browser.hasFocus(input)).toBe(true);
     });
 
     it("tab at last cell should navigate to next line", async () => {
         let cell = await grid.Cell(1, 4)
-        await browser.wait(EC.hasText(cell, "39"), Settings.timeout, "Wrong initial state of the grid.");
+        expect(await browser.hasText(cell, "39")).toBe(true);
         cell.click();
 
         let input = await grid.CellInput(1, 4);
-        await browser.wait(EC.hasFocus(input), Settings.timeout, "Input not focused when click on cell.");
+        expect(await browser.hasFocus(input)).toBe(true);
 
         await browser.sendKey(Key.TAB);
         cell = await grid.Cell(1, 5)
         let button = await browser.findChild(cell, By.css(".k-button"));
-        await browser.wait(EC.hasFocus(button), Settings.timeout, "Button not focused when click on cell.");
+        expect(await browser.hasFocus(button)).toBe(true);
 
         await browser.sendKey(Key.TAB);
         input = await grid.CellInput(2, 1);
-        await browser.wait(EC.hasFocus(input), Settings.timeout, "Failed to focus cell on next line.");
-        await browser.wait(EC.hasValue(input, "Chang"), Settings.timeout, "Focused input has wrong value.");
+        expect(await browser.hasFocus(input)).toBe(true);
+        expect(await browser.hasValue(input, "Chang")).toBe(true);
     });
 
     it("enter should save value", async () => {
         let cell = await grid.Cell(1, 1);
-        await browser.wait(EC.hasText(cell, "Chai"), Settings.timeout, "Wrong initial state of the grid.");
+        expect(await browser.hasText(cell, "Chai")).toBe(true);
 
         cell.click();
         let input = await grid.CellInput(1, 1);
         await browser.type(input, " is OK", false);
-        await browser.wait(EC.hasValue(input, "Chai is OK"), Settings.timeout, "Failed to update input field inside cell.");
+        expect(await browser.hasValue(input, "Chai is OK")).toBe(true);
 
         await browser.sendKey(Key.ENTER);
         cell = await grid.Cell(1, 1);
-        await browser.wait(EC.hasText(cell, "Chai is OK"), Settings.timeout, "Failed to save value on Enter key.");
-        await browser.wait(EC.hasFocus(cell), Settings.timeout, "Parent cell not focused after hit Enter in input element.");
+        expect(await browser.hasText(cell, "Chai is OK")).toBe(true);
+        expect(await browser.hasFocus(cell)).toBe(true);
     });
 
     it("escape should not save value", async () => {
         let cell = await grid.Cell(1, 1);
-        await browser.wait(EC.hasText(cell, "Chai"), Settings.timeout, "Wrong initial state of the grid.");
+        expect(await browser.hasText(cell, "Chai")).toBe(true);
 
         cell.click();
         let input = await grid.CellInput(1, 1);
         await browser.type(input, " is NOT OK", false);
-        await browser.wait(EC.hasValue(input, "Chai is NOT OK"), Settings.timeout, "Failed to update input field inside cell.");
+        expect(await browser.hasValue(input, "Chai is NOT OK")).toBe(true);
 
         await browser.sendKey(Key.ESCAPE);
         cell = await grid.Cell(1, 1);
-        await browser.wait(EC.hasText(cell, "Chai"), Settings.timeout, "Value updated depside Escape key.");
-        await browser.wait(EC.hasFocus(cell), Settings.timeout, "Parent cell not focused after hit Escape in input element.");
+        expect(await browser.hasText(cell, "Chai")).toBe(true);
+        expect(await browser.hasFocus(cell)).toBe(true);
     });
 });
