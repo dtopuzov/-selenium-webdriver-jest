@@ -83,7 +83,11 @@ export class Browser {
     }
 
     public async sleep(milliseconds: number): Promise<void> {
-        await (await this.driver).sleep(milliseconds);
+        await this.driver.sleep(milliseconds);
+    }
+
+    public async getScreenshot(): Promise<string> {
+        return await this.driver.takeScreenshot();
     }
 
     public async verifyNoAccessibilityViolations(cssSelector = "html", disableRules = ["color-contrast"]): Promise<void> {

@@ -13,6 +13,11 @@ export class Grid extends UIComponent {
         return new Pager(this.driver, By.css(".k-grid-pager"));
     }
 
+    public async DataRows(): Promise<WebElement[]> {
+        let rootElement = await this.getElement();
+        return await rootElement.findElements(By.css("tbody tr"));
+    }
+
     public async Header(column: number): Promise<WebElement> {
         let locator = By.css(`thead tr th:nth-of-type(${column})`);
         return await this.GetGridElement(locator, `Failed to find header at column ${column}.`);
