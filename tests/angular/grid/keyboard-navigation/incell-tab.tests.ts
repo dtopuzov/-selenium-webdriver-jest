@@ -42,7 +42,7 @@ describe("Grid Keyboard Navigation InCell Tab", () => {
     });
 
     it("shift+tab should focus previous cell", async () => {
-        let cell = await grid.Cell(1, 2);
+        const cell = await grid.Cell(1, 2);
         expect(await browser.hasText(cell, "18")).toBe(true);
 
         cell.click();
@@ -64,7 +64,7 @@ describe("Grid Keyboard Navigation InCell Tab", () => {
 
         await browser.sendKey(Key.TAB);
         cell = await grid.Cell(1, 5)
-        let button = await browser.findChild(cell, By.css(".k-button"));
+        const button = await browser.findChild(cell, By.css(".k-button"));
         expect(await browser.hasFocus(button)).toBe(true);
 
         await browser.sendKey(Key.TAB);
@@ -78,7 +78,7 @@ describe("Grid Keyboard Navigation InCell Tab", () => {
         expect(await browser.hasText(cell, "Chai")).toBe(true);
 
         cell.click();
-        let input = await grid.CellInput(1, 1);
+        const input = await grid.CellInput(1, 1);
         await browser.type(input, " is OK", false);
         expect(await browser.hasValue(input, "Chai is OK")).toBe(true);
 
@@ -93,7 +93,7 @@ describe("Grid Keyboard Navigation InCell Tab", () => {
         expect(await browser.hasText(cell, "Chai")).toBe(true);
 
         cell.click();
-        let input = await grid.CellInput(1, 1);
+        const input = await grid.CellInput(1, 1);
         await browser.type(input, " is NOT OK", false);
         expect(await browser.hasValue(input, "Chai is NOT OK")).toBe(true);
 

@@ -6,7 +6,7 @@ import { Settings } from "../settings/settings";
 
 export class DriverManager {
 
-    public getDriver() {
+    public getDriver(): ThenableWebDriver {
         switch (Settings.browserName) {
             case Browser.FIREFOX: {
                 return this.getFirefoxDriver();

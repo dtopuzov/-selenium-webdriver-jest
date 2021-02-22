@@ -2,6 +2,7 @@
 junit.xml
 package-lock.json
 __diff_output__
+*.ts.bak 
 
 # Logs
 logs

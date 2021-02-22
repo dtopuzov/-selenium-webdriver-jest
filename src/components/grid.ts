@@ -14,32 +14,32 @@ export class Grid extends UIComponent {
     }
 
     public async DataRows(): Promise<WebElement[]> {
-        let rootElement = await this.getElement();
+        const rootElement = await this.getElement();
         return await rootElement.findElements(By.css("tbody tr"));
     }
 
     public async Header(column: number): Promise<WebElement> {
-        let locator = By.css(`thead tr th:nth-of-type(${column})`);
+        const locator = By.css(`thead tr th:nth-of-type(${column})`);
         return await this.GetGridElement(locator, `Failed to find header at column ${column}.`);
     }
 
     public async HeaderCell(column: number): Promise<WebElement> {
-        let locator = By.css(`thead tr td:nth-of-type(${column})`);
+        const locator = By.css(`thead tr td:nth-of-type(${column})`);
         return await this.GetGridElement(locator, `Failed to find header cell at column ${column}.`);
     }
 
     public async Cell(row: number, column: number): Promise<WebElement> {
-        let locator = By.css(`tr:nth-of-type(${row}) td[role='gridcell']:nth-of-type(${column})`);
+        const locator = By.css(`tr:nth-of-type(${row}) td[role='gridcell']:nth-of-type(${column})`);
         return await this.GetGridElement(locator, `Failed to find cell at {${row}, ${column}}.`);
     }
 
     public async CellInput(row: number, column: number): Promise<WebElement> {
-        let locator = By.css(`tr:nth-of-type(${row}) td[role='gridcell']:nth-of-type(${column}) input`);
+        const locator = By.css(`tr:nth-of-type(${row}) td[role='gridcell']:nth-of-type(${column}) input`);
         return await this.GetGridElement(locator, `Failed to find input at cell {${row}, ${column}}.`);
     }
 
     private async GetGridElement(locator: By, error: string) {
-        let rootElement = await this.getElement();
+        const rootElement = await this.getElement();
         await this.driver.wait(EC.hasChild(rootElement, locator), Settings.timeout, error);
         return await rootElement.findElement(locator);
     }

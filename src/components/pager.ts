@@ -1,4 +1,4 @@
-import { By, ThenableWebDriver } from "selenium-webdriver";
+import { By, ThenableWebDriver, WebElement } from "selenium-webdriver";
 import { Settings } from "../settings/settings";
 import { UIComponent } from "./ui-component";
 import { EC } from "../selenium/conditions";
@@ -8,9 +8,9 @@ export class Pager extends UIComponent {
         super(driver, locator);
     }
 
-    public async getPageButton(text: string) {
-        let pageButtonLocator = By.xpath(`//li[.='${text}']`);
-        let element = await this.getElement();
+    public async getPageButton(text: string): Promise<WebElement> {
+        const pageButtonLocator = By.xpath(`//li[.='${text}']`);
+        const element = await this.getElement();
         await this.driver.wait(EC.hasChild(element, pageButtonLocator)
             , Settings.timeout
             , `Failed to find ${text} page.`);

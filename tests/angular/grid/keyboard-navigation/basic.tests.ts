@@ -25,7 +25,7 @@ describe("Grid Keyboard Navigation Basic", () => {
     });
 
     it("arrow navigation in each direction", async () => {
-        let cell = await grid.Cell(1, 1);
+        const cell = await grid.Cell(1, 1);
         cell.click();
         expect(await browser.hasFocus(cell)).toBe(true);
 
@@ -61,7 +61,7 @@ describe("Grid Keyboard Navigation Basic", () => {
     });
 
     it("up arrow in top-most cell", async () => {
-        let cell = await grid.Cell(1, 1);
+        const cell = await grid.Cell(1, 1);
         cell.click();
         expect(await browser.hasFocus(cell)).toBe(true);
 
@@ -77,7 +77,7 @@ describe("Grid Keyboard Navigation Basic", () => {
     });
 
     it("down arrow in bottom-most cell", async () => {
-        let cell = await grid.Cell(8, 1);
+        const cell = await grid.Cell(8, 1);
         cell.click();
         expect(await browser.hasFocus(cell)).toBe(true);
 
@@ -93,7 +93,7 @@ describe("Grid Keyboard Navigation Basic", () => {
     });
 
     it("page up/down navigation", async () => {
-        let cell = await grid.Cell(2, 2);
+        const cell = await grid.Cell(2, 2);
         expect(await browser.hasText(cell, "Chang")).toBe(true);
         
         cell.click();
@@ -109,7 +109,7 @@ describe("Grid Keyboard Navigation Basic", () => {
     });
 
     it("home/end navigation", async () => {
-        let cell = await grid.Cell(2, 2);      
+        const cell = await grid.Cell(2, 2);      
         cell.click();
         expect(await browser.hasFocus(cell)).toBe(true);
 
@@ -121,7 +121,7 @@ describe("Grid Keyboard Navigation Basic", () => {
     });
 
     it("ctrl + home/end navigation", async () => {
-        let cell = await grid.Cell(2, 2);      
+        const cell = await grid.Cell(2, 2);      
         cell.click();
         expect(await browser.hasFocus(cell)).toBe(true);
 

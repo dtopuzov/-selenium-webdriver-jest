@@ -24,11 +24,11 @@ export class Browser {
     }
 
     public async find(locator: By, timeout = 10000): Promise<WebElement> {
-        let element = await this.driver.wait(until.elementLocated(locator), timeout, `Failed to find element located by ${locator}.`);
+        const element = await this.driver.wait(until.elementLocated(locator), timeout, `Failed to find element located by ${locator}.`);
         await this.driver.wait(until.elementIsVisible(element));
 
         // Hack to handle Safari
-        let browserName = (await (await this.driver).getCapabilities()).getBrowserName().toLowerCase();
+        const browserName = (await (await this.driver).getCapabilities()).getBrowserName().toLowerCase();
         if (browserName == "safari") {
             await this.driver.wait(async () => await element.getRect() != undefined);
         }
@@ -91,24 +91,24 @@ export class Browser {
     }
 
     public async verifyNoAccessibilityViolations(cssSelector = "html", disableRules = ["color-contrast"]): Promise<void> {
-        let axe = new AxeBuilder(this.driver);
+        const axe = new AxeBuilder(this.driver);
         axe.include(cssSelector);
-        for (let rule of disableRules) {
+        for (const rule of disableRules) {
             axe.disableRules(rule);
         }
-        let result = await axe.analyze();
+        const result = await axe.analyze();
         expect(result.violations).toEqual([]);
     }
 
     public async getErrorLogs(): Promise<string[]> {
-        let errors = [];
-        let browserName = (await (await this.driver).getCapabilities()).getBrowserName().toLowerCase();
+        const errors = [];
+        const browserName = (await (await this.driver).getCapabilities()).getBrowserName().toLowerCase();
         if (browserName == "firefox" || browserName == "safari") {
             // Can not get FF logs due to issue.
             // Please see:
             // https://github.com/mozilla/geckodriver/issues/284#issuecomment-477677764
         } else {
-            let logs = await this.driver.manage().logs().get(Type.BROWSER);
+            const logs = await this.driver.manage().logs().get(Type.BROWSER);
             for (const entry of logs) {
                 if (entry.level === Level.SEVERE) {
                     errors.push(entry.message);
@@ -119,11 +119,11 @@ export class Browser {
     }
 
     public async verifyNoJSErrors(excludeList = ["favicon.ico"]): Promise<void> {
-        let allErrors = await this.getErrorLogs();
-        let filteredErrors = [];
-        for (let entry of allErrors) {
-            for (let excludeItem of excludeList) {
-                let error = entry.indexOf(excludeItem) >= 0;
+        const allErrors = await this.getErrorLogs();
+        const filteredErrors = [];
+        for (const entry of allErrors) {
+            for (const excludeItem of excludeList) {
+                const error = entry.indexOf(excludeItem) >= 0;
                 if (!error && filteredErrors.indexOf(entry) < 0) {
                     filteredErrors.push(entry);
                     break;

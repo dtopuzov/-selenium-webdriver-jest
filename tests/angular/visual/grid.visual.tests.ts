@@ -15,7 +15,7 @@ afterAll(async () => {
 
 it.each(["default", "material", "bootstrap"])("grid should look ok in %s theme", async (theme) => {
     await browser.navigateTo(Settings.baseUrl + `grid/examples/a11y/basic-usage/?theme=${theme}`);
-    let grid = new Grid(browser.driver);
+    const grid = new Grid(browser.driver);
     expect((await grid.DataRows()).length).toBe(10);
 
     const options: MatchImageSnapshotOptions = {

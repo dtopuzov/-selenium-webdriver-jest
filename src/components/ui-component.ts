@@ -6,12 +6,12 @@ export class UIComponent {
     }
 
     protected async getElement(waitForVisible = true): Promise<WebElement> {
-        let element = this.driver.wait(until.elementLocated(this.locator), Settings.timeout);
+        const element = this.driver.wait(until.elementLocated(this.locator), Settings.timeout);
         if (waitForVisible) {
             await this.driver.wait(until.elementIsVisible(element), Settings.timeout);
 
             // Hack to handle Safari
-            let browserName = (await (await this.driver).getCapabilities()).getBrowserName().toLowerCase();
+            const browserName = (await (await this.driver).getCapabilities()).getBrowserName().toLowerCase();
             if (browserName == "safari") {
                 await this.driver.wait(async () => await element.getRect() != undefined, Settings.timeout);
             }

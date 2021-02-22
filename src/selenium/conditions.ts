@@ -8,7 +8,7 @@ export class EC {
     }
 
     public static hasFocus(element: WebElement): () => Promise<boolean> {
-        let driver = element.getDriver();
+        const driver = element.getDriver();
         return () => driver.switchTo().activeElement().getId().then(async id => {
             return id == await element.getId();
         });
