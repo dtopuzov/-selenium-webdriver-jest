@@ -1,13 +1,13 @@
-# selenium-webdriver-jest
+# kendo-driver
 
-Spike for e2e test automation with Jest and Selenium
+Selenium based abstractions of KendoUI components.
 
 ## Execute Tests
 
 Run tests:
 
 ```bash
-npx jest tests/vue
+npx jest tests/angular/e2e
 ```
 
 Hints:
@@ -26,7 +26,7 @@ Possible values are:
 
 To enable headless mode set `HEADLESS=true` (default is false).
 
-To set browser size you can set `BROWSER_WIDTH` and `BROWSER_HEIGHT` variables.
+To set browser size you can set `BROWSER_WIDTH` and `BROWSER_HEIGHT` variables (default resolution is 1366x768).
 
 ## Resources
 

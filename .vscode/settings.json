@@ -20,6 +20,7 @@
         "maskedtextbox",
         "multiselect",
         "numerictextbox",
+        "telerik",
         "textbox",
         "timepicker",
         "webdriverjs"

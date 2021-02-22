@@ -11,7 +11,7 @@ const config: Config.InitialOptions = {
     projects: ['<rootDir>'],
     testEnvironment: "node",
     testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/tests/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
-    testPathIgnorePatterns: ['/(?:production_)?node_modules/', '.d.ts$'],
+    testPathIgnorePatterns: ['/(?:production_)?node_modules/', '.d.ts$', 'const.ts'],
     transform: {
         '^.+\\.[jt]sx?$': 'ts-jest'
     },
@@ -21,12 +21,8 @@ const config: Config.InitialOptions = {
         [
             "jest-junit",
             {
-                classNameTemplate: (vars) => {
-                    return vars.classname;
-                },
-                titleTemplate: (vars) => {
-                    return vars.title;
-                }
+                classNameTemplate: (vars: { classname: string; }) => vars.classname,
+                titleTemplate: (vars: { title: string; }) => vars.title
             }
         ]
     ]

@@ -5,12 +5,13 @@ import { EC } from "../selenium/conditions";
 import { Settings } from "../settings/settings";
 
 export class Grid extends UIComponent {
-    constructor(driver: ThenableWebDriver, locator = By.css(".k-grid")) {
-        super(driver, locator);
+    constructor(driver: ThenableWebDriver, locator = By.css(".k-grid"), protected parentElement?: WebElement) {
+        super(driver, locator, parentElement);
     }
 
-    public get Pager(): Pager {
-        return new Pager(this.driver, By.css(".k-grid-pager"));
+    public async Pager(): Promise<Pager> {
+        const rootElement = await this.getElement();
+        return new Pager(this.driver, By.css(".k-grid-pager"), rootElement);
     }
 
     public async DataRows(): Promise<WebElement[]> {

@@ -1,14 +1,14 @@
 {
-  "name": "selenium-webdriver-jest",
+  "name": "kendo-driver",
   "version": "1.0.0",
-  "description": "Spike for e2e tests with Jest and Selenium",
+  "description": "Selenium based abstractions of KendoUI components.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "lint": "eslint src/**",
+    "lint": "eslint src/**/*.ts",
     "build": "tsc",
     "test": "jest",
-    "pack": "rm -rf ./dist && npx cti create ./src && npm run build && node dist/setup.js && rm -rf dist/setup.* && cp LICENSE README.md dist"
+    "pack": "rm -rf ./dist && npx cti create ./src && npm run build && node dist/setup.js && rm -rf dist/setup.* && cp LICENSE README.md dist && npm pack"
   },
   "repository": {
     "type": "git",
@@ -22,31 +22,34 @@
     "jest",
     "selenium",
     "selenium-webdriver",
-    "webdriver"
+    "webdriver",
+    "kendo",
+    "telerik",
+    "progress"
   ],
   "author": "dtopuzov",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/dtopuzov/selenium-webdriver-jest/issues"
+    "url": "https://github.com/dtopuzov/kendo-driver/issues"
   },
-  "homepage": "https://github.com/dtopuzov/selenium-webdriver-jest#readme",
+  "homepage": "https://github.com/dtopuzov/kendo-driver#readme",
   "dependencies": {
     "@axe-core/webdriverjs": "4.1.1",
-    "@types/jest": "26.0.20",
-    "@types/jest-image-snapshot": "4.1.3",
     "@types/node": "14.14.28",
     "@types/selenium-webdriver": "4.0.11",
-    "@typescript-eslint/eslint-plugin": "4.15.1",
-    "@typescript-eslint/parser": "4.15.1",
     "chromedriver": "latest",
     "geckodriver": "latest",
-    "jest": "26.6.3",
-    "jest-image-snapshot": "4.3.0",
     "selenium-webdriver": "4.0.0-beta.1"
   },
   "devDependencies": {
+    "@types/jest": "26.0.20",
+    "@types/jest-image-snapshot": "4.1.3",
+    "@typescript-eslint/eslint-plugin": "4.15.1",
+    "@typescript-eslint/parser": "4.15.1",
     "create-ts-index": "1.13.6",
     "eslint": "7.20.0",
+    "jest": "26.6.3",
+    "jest-image-snapshot": "4.3.0",
     "jest-junit": "12.0.0",
     "ts-jest": "26.5.1",
     "ts-node": "9.1.1",

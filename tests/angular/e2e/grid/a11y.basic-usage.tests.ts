@@ -1,7 +1,7 @@
 import { Browser } from "../../../../src/selenium/browser";
-import { Settings } from "../../../../src/settings/settings";
 import { Grid } from "../../../../src/components/grid";
 import { Key } from "selenium-webdriver";
+import { Config } from "../../const";
 
 describe("Grid Keyboard Navigation Basic", () => {
     let browser: Browser;
@@ -12,7 +12,7 @@ describe("Grid Keyboard Navigation Basic", () => {
     });
 
     beforeEach(async () => {
-        await browser.navigateTo(Settings.baseUrl + "grid/examples/a11y/basic-usage/?theme=default");
+        await browser.navigateTo(`${Config.baseUrl}/grid/examples/a11y/basic-usage/?theme=default`);
         grid = new Grid(browser.driver);
     });
 
@@ -95,33 +95,33 @@ describe("Grid Keyboard Navigation Basic", () => {
     it("page up/down navigation", async () => {
         const cell = await grid.Cell(2, 2);
         expect(await browser.hasText(cell, "Chang")).toBe(true);
-        
+
         cell.click();
         expect(await browser.hasFocus(cell)).toBe(true);
 
         await browser.sendKey(Key.PAGE_DOWN);
-        expect(await browser.hasText(await grid.Cell(2,2), "Queso Manchego La Pastora")).toBe(true);
+        expect(await browser.hasText(await grid.Cell(2, 2), "Queso Manchego La Pastora")).toBe(true);
         expect(await browser.hasFocus(await grid.Header(1))).toBe(true);
 
         await browser.sendKey(Key.PAGE_UP);
-        expect(await browser.hasText(await grid.Cell(2,2), "Chang")).toBe(true);
+        expect(await browser.hasText(await grid.Cell(2, 2), "Chang")).toBe(true);
         expect(await browser.hasFocus(await grid.Header(1))).toBe(true);
     });
 
     it("home/end navigation", async () => {
-        const cell = await grid.Cell(2, 2);      
+        const cell = await grid.Cell(2, 2);
         cell.click();
         expect(await browser.hasFocus(cell)).toBe(true);
 
         await browser.sendKey(Key.HOME);
-        expect(await browser.hasFocus(await grid.Cell(2,1))).toBe(true);
+        expect(await browser.hasFocus(await grid.Cell(2, 1))).toBe(true);
 
         await browser.sendKey(Key.END);
-        expect(await browser.hasFocus(await grid.Cell(2,3))).toBe(true);
+        expect(await browser.hasFocus(await grid.Cell(2, 3))).toBe(true);
     });
 
     it("ctrl + home/end navigation", async () => {
-        const cell = await grid.Cell(2, 2);      
+        const cell = await grid.Cell(2, 2);
         cell.click();
         expect(await browser.hasFocus(cell)).toBe(true);
 
@@ -129,6 +129,6 @@ describe("Grid Keyboard Navigation Basic", () => {
         expect(await browser.hasFocus(await grid.Header(1))).toBe(true);
 
         await browser.sendKeyCombination(Key.CONTROL, Key.END);
-        expect(await browser.hasFocus(await grid.Cell(10,3))).toBe(true);
+        expect(await browser.hasFocus(await grid.Cell(10, 3))).toBe(true);
     });
 });

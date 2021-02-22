@@ -1,7 +1,7 @@
 import { By, Key } from "selenium-webdriver";
 import { Grid } from "../../../../src/components/grid";
 import { Browser } from "../../../../src/selenium/browser";
-import { Settings } from "../../../../src/settings/settings";
+import { Config } from "../../const";
 
 describe("Grid Keyboard Navigation InCell Tab", () => {
     let browser: Browser;
@@ -12,7 +12,7 @@ describe("Grid Keyboard Navigation InCell Tab", () => {
     });
 
     beforeEach(async () => {
-        await browser.navigateTo(Settings.baseUrl + "grid/examples/a11y/incell-tab");
+        await browser.navigateTo(`${Config.baseUrl}/grid/examples/a11y/incell-tab`);
         grid = new Grid(browser.driver);
     });
 
