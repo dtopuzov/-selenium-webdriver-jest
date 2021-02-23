@@ -7,7 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+
+  e2e-chrome-windows:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -17,9 +18,24 @@ jobs:
         node-version: '12'
     - name: Install Dependencies
       run: npm ci
-    - name: Lint
-      run: npm run lint
-    - name: Build
-      run: npm run build
     - name: E2E Tests
-      run: npm run test:e2e
+      run: |
+        set BROWSER_NAME=chrome
+        set HEADLESS=true
+        npm run test:e2e
+      
+  e2e-firefox-windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+    - name: Install Dependencies
+      run: npm ci
+    - name: E2E Tests
+      run: |
+        set BROWSER_NAME=firefox
+        set HEADLESS=true
+        npm run test:e2e
