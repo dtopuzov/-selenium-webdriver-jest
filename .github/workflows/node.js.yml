@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  e2e-chrome-windows:
+  e2e-chrome:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -24,8 +24,8 @@ jobs:
         set HEADLESS=true
         npm run test:e2e
       
-  e2e-firefox-windows:
-    runs-on: windows-latest
+  e2e-firefox:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Install Node.js
@@ -36,6 +36,6 @@ jobs:
       run: npm ci
     - name: E2E Tests
       run: |
-        set BROWSER_NAME=firefox
-        set HEADLESS=true
+        export BROWSER_NAME=firefox
+        export HEADLESS=true
         npm run test:e2e
