@@ -1,18 +1,18 @@
 import { By, Key } from "selenium-webdriver";
-import { Grid } from "../../../../src/components/grid";
-import { Browser } from "../../../../src/selenium/browser";
+import { Grid } from "../../../src/components/grid";
+import { Browser } from "../../../src/selenium/browser";
 import { Config } from "../../const";
 
 describe("Grid Keyboard Navigation InCell Tab", () => {
     let browser: Browser;
     let grid: Grid;
 
-    beforeAll(async () => {
-        browser = await new Browser();
+    beforeAll(() => {
+        browser = new Browser();
     });
 
     beforeEach(async () => {
-        await browser.navigateTo(`${Config.baseUrl}/grid/examples/a11y/incell-tab`);
+        await browser.navigateTo(`${Config.ngUrl}/grid/examples/a11y/incell-tab`);
         grid = new Grid(browser.driver);
     });
 

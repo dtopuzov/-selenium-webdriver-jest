@@ -5,9 +5,11 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "lint": "eslint src/**/*.ts",
-    "build": "tsc",
-    "test": "jest",
+    "lint": "npx eslint src/**/*.ts",
+    "build": "npm run lint && npx tsc",
+    "test:a11y": "npx jest tests/a11y",
+    "test:e2e": "npx jest tests/e2e",
+    "test:visual": "npx jest tests/visual",
     "pack": "rm -rf ./dist && npx cti create ./src && npm run build && node dist/setup.js && rm -rf dist/setup.* && cp LICENSE README.md dist && npm pack"
   },
   "repository": {

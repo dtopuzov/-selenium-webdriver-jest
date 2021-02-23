@@ -7,12 +7,8 @@ Selenium based abstractions of KendoUI components.
 Run tests:
 
 ```bash
-npx jest tests/angular/e2e
+npm run tests:e2e
 ```
-
-Hints:
-
-- [Jest Runner](https://marketplace.visualstudio.com/items?itemName=firsttris.vscode-jest-runner) is awesome extension that makes it easy to run tests inside IDE.
 
 ## Test Settings
 
@@ -36,3 +32,4 @@ To set browser size you can set `BROWSER_WIDTH` and `BROWSER_HEIGHT` variables (
 - [jest-webdriver](https://github.com/alexeyraspopov/jest-webdriver) looks abandoned, but nice ideas
 - [jest-allure/examples](https://github.com/zaqqaz/jest-allure/tree/master/examples) shows e2e testing with global setup and teardown.
 - [visual-unit-tests](https://github.com/zaqqaz/visual-unit-tests) one more e2e demo with allure
+- [Jest Runner](https://marketplace.visualstudio.com/items?itemName=firsttris.vscode-jest-runner) is awesome extension that makes it easy to run tests inside IDE.

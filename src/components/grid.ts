@@ -24,19 +24,67 @@ export class Grid extends UIComponent {
         return await this.GetGridElement(locator, `Failed to find header at column ${column}.`);
     }
 
+    public async HeaderByText(text: string, exactMatch = true): Promise<WebElement> {
+        // Angular and Blazor: Header text is in span with class "k-column-title"
+        // jQuery, React and Vue: Header text is in span with class "k-link"
+        let locator = null;
+        if (exactMatch) {
+            locator = By.xpath(`//thead//tr//th[.//*[(@class='k-column-title' or @class='k-link') and .='${text}']]`);
+        } else {
+            locator = By.xpath(`//thead//tr//th[.//*[(@class='k-column-title' or @class='k-link') and contains(.,'${text}')]]`);
+        }
+        return await this.GetGridElement(locator, `Failed to find header with "${text}" text.`);
+    }
+
+    public async HeaderSortType(text: string, exactMatch = true): Promise<string> {
+        const rootElement = await this.HeaderByText(text, exactMatch);
+        if ((await rootElement.findElements(By.css(".k-i-sort-asc-sm"))).length > 0) {
+            return "asc";
+        } if ((await rootElement.findElements(By.css(".k-i-sort-desc-sm"))).length > 0) {
+            return "desc";
+        }
+        else {
+            return null;
+        }
+    }
+
+    public async GetSortOrder(text: string, exactMatch = true): Promise<string> {
+        const locator = By.css(".k-sort-order");
+        const rootElement = await this.HeaderByText(text, exactMatch);
+        if ((await rootElement.findElements(locator)).length > 0) {
+            return (await rootElement.findElement(locator)).getText();
+        } else {
+            return null;
+        }
+    }
+
     public async HeaderCell(column: number): Promise<WebElement> {
         const locator = By.css(`thead tr td:nth-of-type(${column})`);
         return await this.GetGridElement(locator, `Failed to find header cell at column ${column}.`);
     }
 
     public async Cell(row: number, column: number): Promise<WebElement> {
-        const locator = By.css(`tr:nth-of-type(${row}) td[role='gridcell']:nth-of-type(${column})`);
-        return await this.GetGridElement(locator, `Failed to find cell at {${row}, ${column}}.`);
+        const defaultLocator = `tr:nth-of-type(${row}) td[role='gridcell']:nth-of-type(${column})`;
+        const vueLocator = `tr.k-master-row:nth-of-type(${row}) td:nth-of-type(${column})`;
+        const errorMessage = `Failed to find cell at {${row}, ${column}}.`;
+        return await this.GetGridElement(By.css(`${defaultLocator}, ${vueLocator}`), errorMessage);
     }
 
     public async CellInput(row: number, column: number): Promise<WebElement> {
-        const locator = By.css(`tr:nth-of-type(${row}) td[role='gridcell']:nth-of-type(${column}) input`);
-        return await this.GetGridElement(locator, `Failed to find input at cell {${row}, ${column}}.`);
+        const defaultLocator = `tr:nth-of-type(${row}) td[role='gridcell']:nth-of-type(${column}) input`;
+        const vueLocator = `tr.k-master-row:nth-of-type(${row}) td:nth-of-type(${column}) input`;
+        const errorMessage = `Failed to find input at cell {${row}, ${column}}.`;
+        return await this.GetGridElement(By.css(`${defaultLocator}, ${vueLocator}`), errorMessage);
+    }
+
+    public async CellsByColumn(column: number, limit?: number): Promise<WebElement[]> {
+        const rootElement = await this.getElement();
+        const cells = await rootElement.findElements(By.css(`tr td:nth-of-type(${column})`));
+        if (limit != undefined) {
+            return cells.slice(0, limit);
+        } else {
+            return cells;
+        }
     }
 
     private async GetGridElement(locator: By, error: string) {

@@ -1,5 +1,5 @@
-import { Browser } from "../../../../src/selenium/browser";
-import { Grid } from "../../../../src/components/grid";
+import { Browser } from "../../../src/selenium/browser";
+import { Grid } from "../../../src/components/grid";
 import { Key } from "selenium-webdriver";
 import { Config } from "../../const";
 
@@ -12,7 +12,7 @@ describe("Grid Keyboard Navigation Basic", () => {
     });
 
     beforeEach(async () => {
-        await browser.navigateTo(`${Config.baseUrl}/grid/examples/a11y/basic-usage/?theme=default`);
+        await browser.navigateTo(`${Config.ngUrl}/grid/examples/a11y/basic-usage/?theme=default`);
         grid = new Grid(browser.driver);
     });
 
