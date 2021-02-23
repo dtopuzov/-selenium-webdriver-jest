@@ -1,33 +1,8 @@
 import { Browser } from "../../../src/selenium/browser";
 import { Grid } from "../../../src/components/grid";
 import { Config } from "../../const";
-import { By, WebElement } from "selenium-webdriver";
-
-async function isAscending(cells: WebElement[]): Promise<boolean> {
-    let isSorted = true;
-    for (let i = 0; i < cells.length - 1; i++) {
-        const text1 = await cells[i].getText();
-        const text2 = await cells[i + 1].getText();
-        if (text1.localeCompare(text2, undefined, { numeric: true, sensitivity: 'base' }) > 0) {
-            isSorted = false;
-            break;
-        }
-    }
-    return isSorted;
-}
-
-async function isDescending(cells: WebElement[]): Promise<boolean> {
-    let isSorted = true;
-    for (let i = 0; i < cells.length - 1; i++) {
-        const text1 = await cells[i].getText();
-        const text2 = await cells[i + 1].getText();
-        if (text1.localeCompare(text2, undefined, { numeric: true, sensitivity: 'base' }) < 0) {
-            isSorted = false;
-            break;
-        }
-    }
-    return isSorted;
-}
+import { By } from "selenium-webdriver";
+import { isAscending, isDescending } from "../../utils";
 
 let browser: Browser;
 let grid: Grid;
