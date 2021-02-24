@@ -2,27 +2,77 @@
 
 Selenium based abstractions of KendoUI components.
 
-## Execute Tests
+## Usage
+
+### Managing browsers
+
+Example:
+
+```javascript
+    const browser = new Browser();    
+    await browser.navigateTo("https://www.telerik.com/")
+    await browser.close();
+```
+
+By default it will start Chrome browser with size 1366x768.
+
+Browser type and size can be controlled by settings following environment variables:
+
+- `BROWSER_NAME`
+
+    Allowed values are `chrome`, `firefox` and `safari` (default is `chrome`).
+
+- `BROWSER_WIDTH` and `BROWSER_HEIGHT`
+
+    Default values are `1366` and `768`.
+
+- `HEADLESS`
+
+    If set to `true` it will start browsers in headless mode (default is `false`).
+
+    Notes: `Safari` do not support headless mode and this setting will be ignored.
+
+### Find Elements and Wait for Conditions
+
+TODO
+
+### Take Screenshots
+
+TODO
+
+### Detect JavaScript errors in Browser Logs
+
+TODO
+
+### Detect Accessibility Violations
+
+TODO
+
+### Kendo UI Components Abstractions
+
+TODO
+
+## Contribution
+
+PRs are welcome!
+
+Lint:
+
+```bash
+npm run lint
+```
+
+Build:
+
+```bash
+npm run build
+```
 
 Run tests:
 
 ```bash
 npm run tests:e2e
 ```
-
-## Test Settings
-
-To specify browser please set `BROWSER_NAME` variable.
-
-Possible values are:
-
-- `chrome` (default)
-- `firefox`
-- `safari`
-
-To enable headless mode set `HEADLESS=true` (default is false).
-
-To set browser size you can set `BROWSER_WIDTH` and `BROWSER_HEIGHT` variables (default resolution is 1366x768).
 
 ## Resources
 
