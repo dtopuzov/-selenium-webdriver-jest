@@ -39,3 +39,18 @@ jobs:
         export BROWSER_NAME=firefox
         export HEADLESS=true
         npm run test:e2e -- --maxWorkers=4
+        
+  e2e-safari:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+    - name: Install Dependencies
+      run: npm ci
+    - name: E2E Tests
+      run: |
+        export BROWSER_NAME=safari
+        npm run test:e2e -- --maxWorkers=1
