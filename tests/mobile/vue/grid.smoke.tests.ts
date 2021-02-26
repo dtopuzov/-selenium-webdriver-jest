@@ -21,9 +21,9 @@ it("should be able to sort", async () => {
     
     await header.click();
     await browser.sleep(5000);
-    expect(await isAscending(await grid.CellsByColumn(1))).toBe(true);
+    expect(await isAscending(await grid.CellsByColumn(1, 10))).toBe(true);
 
     await header.click();
     await browser.sleep(5000);
-    expect(await isDescending(await grid.CellsByColumn(1))).toBe(true);
+    expect(await isDescending(await grid.CellsByColumn(1, 10))).toBe(true);
 });
