@@ -73,7 +73,7 @@ jobs:
         export BROWSER_NAME=remote
         export BS_BROWSER_NAME=Android
         export BS_OS_VERSION=10.0
-        export BS_DEVICE_NAME=Google Pixel 4
+        export BS_DEVICE_NAME="Google Pixel 4"
         export BS_REAL_MOBILE=true
         export BS_BUILD_NAME=kendo-driver-ci
         export BS_BUILD_NUMBER=android-pixel-4
