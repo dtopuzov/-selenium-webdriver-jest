@@ -67,8 +67,8 @@ jobs:
       run: npm ci
     - name: Mobile Tests on Android Device
       env:
-        BS_USER_NAME:${{ secrets.BS_USER_NAME }}
-        BS_ACCESS_KEY:${{ secrets.BS_ACCESS_KEY }}
+        BS_USER_NAME: ${{ secrets.BS_USER_NAME }}
+        BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
       run: |
         export BROWSER_NAME=remote
         export BS_BROWSER_NAME=Android
