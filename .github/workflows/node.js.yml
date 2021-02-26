@@ -89,7 +89,7 @@ jobs:
         node-version: '12'
     - name: Install Dependencies
       run: npm ci
-    - name: Mobile Tests on Android Device
+    - name: Mobile Tests on iOS Device
       env:
         BS_USER_NAME: ${{ secrets.BS_USER_NAME }}
         BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
