@@ -2,12 +2,16 @@ import { Browser, Builder, logging, ThenableWebDriver } from "selenium-webdriver
 import { Options as ChromeOptions } from "selenium-webdriver/chrome";
 import { Options as FirefoxOptions, ServiceBuilder as FirefoxServiceBuilder } from "selenium-webdriver/firefox";
 import { Options as SafariOptions } from "selenium-webdriver/safari";
+import { BSSettings as BSSettings } from "../settings/browserstack-settings";
 import { Settings } from "../settings/settings";
 
 export class DriverManager {
 
     public getDriver(): ThenableWebDriver {
         switch (Settings.browserName) {
+            case Browser.CHROME: {
+                return this.getChromeDriver();
+            }
             case Browser.FIREFOX: {
                 return this.getFirefoxDriver();
             }
@@ -15,7 +19,7 @@ export class DriverManager {
                 return this.getSafariDriver();
             }
             default: {
-                return this.getChromeDriver();
+                return this.getBrowserStackDriver();
             }
         }
     }
@@ -59,5 +63,29 @@ export class DriverManager {
         const size = { width: Settings.browserWidth, height: Settings.browserHeight, x: 0, y: 0 };
         driver.manage().window().setRect(size);
         return driver;
+    }
+
+    private getBrowserStackDriver(): ThenableWebDriver {
+        if (BSSettings.accessKey == undefined || BSSettings.userName == undefined) {
+            throw Error("Please set BS_USER_NAME and BS_ACCESS_KEY variables.");
+        }
+
+        const url = "http://hub-cloud.browserstack.com/wd/hub";
+        const capabilities = {
+            'bstack:options': {
+                "osVersion": BSSettings.osVersion,
+                "deviceName": BSSettings.deviceName,
+                "realMobile": BSSettings.realMobile,
+                "local": BSSettings.local,
+                "userName": BSSettings.userName,
+                "accessKey": BSSettings.accessKey
+            },
+            "browserName": BSSettings.browserName,
+            "name": BSSettings.buildName,
+            "build": BSSettings.buildNumber,
+            "nativeWebTap": "true"
+        }
+
+        return new Builder().usingServer(url).withCapabilities(capabilities).build();
     }
 }

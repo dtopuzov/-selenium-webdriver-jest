@@ -54,3 +54,51 @@ jobs:
       run: |
         export BROWSER_NAME=safari
         npm run test:e2e -- --maxWorkers=1
+
+  mobile-android:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+    - name: Install Dependencies
+      run: npm ci
+    - name: Mobile Tests on Android Device
+      env:
+        BS_USER_NAME: ${{ secrets.BS_USER_NAME }}
+        BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
+      run: |
+        export BROWSER_NAME=remote
+        export BS_BROWSER_NAME=Android
+        export BS_OS_VERSION=10.0
+        export BS_DEVICE_NAME="Google Pixel 4"
+        export BS_REAL_MOBILE=true
+        export BS_BUILD_NAME=kendo-driver-ci
+        export BS_BUILD_NUMBER=android-pixel-4
+        npm run test:mobile -- --maxWorkers=1
+        
+  mobile-ios:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+    - name: Install Dependencies
+      run: npm ci
+    - name: Mobile Tests on iOS Device
+      env:
+        BS_USER_NAME: ${{ secrets.BS_USER_NAME }}
+        BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
+      run: |
+        export BROWSER_NAME=remote
+        export BS_BROWSER_NAME=iPhone
+        export BS_OS_VERSION=14
+        export BS_DEVICE_NAME="iPhone 11"
+        export BS_REAL_MOBILE=true
+        export BS_BUILD_NAME=kendo-driver-ci
+        export BS_BUILD_NUMBER=ios-iphone-11
+        npm run test:mobile -- --maxWorkers=1  
