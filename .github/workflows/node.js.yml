@@ -67,10 +67,10 @@ jobs:
       run: npm ci
     - name: Mobile Tests on Android Device
       env:
-        BS_USER_NAME: ${{ secrets.BS_USER_NAME }}
-        BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
+        BS_USER_NAME:${{ secrets.BS_USER_NAME }}
+        BS_ACCESS_KEY:${{ secrets.BS_ACCESS_KEY }}
       run: |
-        export BROSER_NAME=remote
+        export BROWSER_NAME=remote
         export BS_BROWSER_NAME=Android
         export BS_OS_VERSION=10.0
         export BS_DEVICE_NAME=Google Pixel 4
