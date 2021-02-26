@@ -19,8 +19,10 @@ it("should be able to sort", async () => {
     grid = new Grid(browser.driver);
 
     const header = await grid.HeaderByText("ProductID");
+    await browser.sleep(3000);
     expect(await isAscending(await grid.CellsByColumn(2, 10))).toBe(true);
 
     await header.click();
+    await browser.sleep(3000);
     expect(await isDescending(await grid.CellsByColumn(2, 10))).toBe(true);
 });
