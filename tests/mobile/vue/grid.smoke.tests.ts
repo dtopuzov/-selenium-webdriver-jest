@@ -20,8 +20,10 @@ it("should be able to sort", async () => {
     const header = await grid.Header(1);
     
     await header.click();
+    await browser.sleep(5000);
     expect(await isAscending(await grid.CellsByColumn(1))).toBe(true);
 
     await header.click();
+    await browser.sleep(5000);
     expect(await isDescending(await grid.CellsByColumn(1))).toBe(true);
 });
