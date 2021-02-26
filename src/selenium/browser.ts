@@ -102,18 +102,25 @@ export class Browser {
 
     public async getErrorLogs(): Promise<string[]> {
         const errors = [];
-        const browserName = (await (await this.driver).getCapabilities()).getBrowserName().toLowerCase();
-        if (browserName == "firefox" || browserName == "safari") {
-            // Can not get FF logs due to issue.
-            // Please see:
-            // https://github.com/mozilla/geckodriver/issues/284#issuecomment-477677764
-        } else {
+        const capabilities = (await (await this.driver).getCapabilities());
+        const platform = capabilities.getPlatform().toLowerCase();
+        const browserName = capabilities.getBrowserName().toLowerCase();
+
+        // Can not get FF logs due to issue.
+        // Please see:
+        // https://github.com/mozilla/geckodriver/issues/284#issuecomment-477677764
+        //
+        // Note: Logs are not supported on mobile platforms too!
+        if (browserName == "chrome" && platform != "android" && platform != "ios") {
             const logs = await this.driver.manage().logs().get(Type.BROWSER);
             for (const entry of logs) {
                 if (entry.level === Level.SEVERE) {
                     errors.push(entry.message);
                 }
             }
+        }
+        else {
+            console.log(`Get browser logs not supported on ${browserName} and all mobile browsers too!`);
         }
         return errors;
     }
