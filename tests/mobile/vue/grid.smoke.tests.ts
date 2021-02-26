@@ -18,11 +18,10 @@ it("should be able to sort", async () => {
     await browser.navigateTo(`${Config.vueUrl}/grid/examples/sorting/custom/?theme=default`);
     grid = new Grid(browser.driver);
 
-    const header = await grid.Header(1);
     await browser.sleep(3000);
+    const header = await grid.Header(1);
     expect(await isAscending(await grid.CellsByColumn(1))).toBe(true);
 
     await header.click();
-    await browser.sleep(3000);
     expect(await isDescending(await grid.CellsByColumn(1))).toBe(true);
 });

@@ -18,11 +18,10 @@ it("should be able to sort", async () => {
     await browser.navigateTo(`${Config.ngUrl}/grid/examples/configuration/sorting/?theme=default`);
     grid = new Grid(browser.driver);
 
-    const header = await grid.HeaderByText("ID");
     await browser.sleep(3000);
-    expect(await isAscending(await grid.CellsByColumn(2))).toBe(true);
+    const header = await grid.Header(1);
+    expect(await isAscending(await grid.CellsByColumn(1))).toBe(true);
 
     await header.click();
-    await browser.sleep(3000);
-    expect(await isDescending(await grid.CellsByColumn(2))).toBe(true);
+    expect(await isDescending(await grid.CellsByColumn(1))).toBe(true);
 });
