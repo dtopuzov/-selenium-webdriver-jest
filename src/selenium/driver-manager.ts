@@ -78,7 +78,8 @@ export class DriverManager {
                 "realMobile": BSSettings.realMobile,
                 "local": BSSettings.local,
                 "userName": BSSettings.userName,
-                "accessKey": BSSettings.accessKey
+                "accessKey": BSSettings.accessKey,
+                "nativeWebTap": "true"
             },
             "browserName": BSSettings.browserName,
             "name": BSSettings.buildName,
