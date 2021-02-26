@@ -78,12 +78,12 @@ export class DriverManager {
                 "realMobile": BSSettings.realMobile,
                 "local": BSSettings.local,
                 "userName": BSSettings.userName,
-                "accessKey": BSSettings.accessKey,
-                "nativeWebTap": "true"
+                "accessKey": BSSettings.accessKey
             },
             "browserName": BSSettings.browserName,
             "name": BSSettings.buildName,
-            "build": BSSettings.buildNumber
+            "build": BSSettings.buildNumber,
+            "nativeWebTap": "true"
         }
 
         return new Builder().usingServer(url).withCapabilities(capabilities).build();
