@@ -10,7 +10,7 @@ export class DriverManager {
     public getDriver(): ThenableWebDriver {
         switch (Settings.browserName) {
             case Browser.CHROME: {
-                return this.getFirefoxDriver();
+                return this.getChromeDriver();
             }
             case Browser.FIREFOX: {
                 return this.getFirefoxDriver();
