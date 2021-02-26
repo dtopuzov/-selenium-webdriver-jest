@@ -111,7 +111,7 @@ export class Browser {
         // https://github.com/mozilla/geckodriver/issues/284#issuecomment-477677764
         //
         // Note: Logs are not supported on mobile platforms too!
-        if (browserName == "chrome" && platform != "android" && platform != "ios") {
+        if (browserName == "chrome" && platform != "android" && platform != "iphone") {
             const logs = await this.driver.manage().logs().get(Type.BROWSER);
             for (const entry of logs) {
                 if (entry.level === Level.SEVERE) {
@@ -119,9 +119,7 @@ export class Browser {
                 }
             }
         }
-        else {
-            console.log(`Get browser logs not supported on ${browserName} and all mobile browsers too!`);
-        }
+
         return errors;
     }
 
