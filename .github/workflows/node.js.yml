@@ -65,11 +65,10 @@ jobs:
         node-version: '12'
     - name: Install Dependencies
       run: npm ci
-    - shell: bash
+    - name: Mobile Tests on Android Device
       env: |
           BS_USER_NAME: ${{ secrets.BS_USER_NAME }}
           BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
-    - name: Mobile Tests on Android Device
       run: |
         export BS_USER_NAME=$BS_USER_NAME
         export BS_ACCESS_KEY=$BS_ACCESS_KEY
