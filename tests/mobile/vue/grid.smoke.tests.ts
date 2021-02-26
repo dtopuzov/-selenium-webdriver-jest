@@ -18,14 +18,9 @@ it("should be able to sort", async () => {
     await browser.navigateTo(`${Config.vueUrl}/grid/examples/sorting/custom/?theme=default`);
     grid = new Grid(browser.driver);
 
-    const header = await grid.HeaderByText("Product Name");
-    expect(await grid.HeaderSortType("Product Name")).toEqual("asc");
+    const header = await grid.HeaderByText("ID");
     expect(await isAscending(await grid.CellsByColumn(2, 10))).toBe(true);
 
     await header.click();
-    expect(await grid.HeaderSortType("Product Name")).toEqual("desc");
     expect(await isDescending(await grid.CellsByColumn(2, 10))).toBe(true);
-
-    await header.click();
-    expect(await grid.HeaderSortType("Product Name")).toBeNull();
 });
