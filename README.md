@@ -32,6 +32,27 @@ Browser type and size can be controlled by settings following environment variab
 
     Notes: `Safari` do not support headless mode and this setting will be ignored.
 
+### BrowserStack Support
+
+Running tests on [BrowserStack](https://www.browserstack.com/) is similar to ruining them locally, we just need to tell it what device and capabilities we need.
+
+Configuration happens via environment variables:
+
+```bash
+export BROWSER_NAME=remote
+export BS_USER_NAME=<your browser stack user id>
+export BS_ACCESS_KEY=<your browser stack access key>
+export BS_BROWSER_NAME=<Android|iPhone> (default is "Android")
+export BS_BROWSER_NAME=<version of the mobile os> (default is "10.0")
+export BS_DEVICE_NAME=<name of device> (default is "Google Pixel 4")
+export BS_REAL_MOBILE=<true|false> (default is "true")
+export BS_LOCAL=<true|false> (default is "false")
+export BS_BUILD_NAME=<string> (default is "BStack Test")
+export BS_BUILD_NUMBER=<string> (default is "BStack Build 1")
+```
+
+To check available mobile devices and capabilities please visit [this](https://www.browserstack.com/automate/capabilities) page.
+
 ### Find Elements and Wait for Conditions
 
 TODO
