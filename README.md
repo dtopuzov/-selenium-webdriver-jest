@@ -32,9 +32,16 @@ Browser type and size can be controlled by settings following environment variab
 
     Notes: `Safari` do not support headless mode and this setting will be ignored.
 
-### BrowserStack Support
+### Testing on Real Mobile Devices @BrowserStack
 
-Running tests on [BrowserStack](https://www.browserstack.com/) is similar to ruining them locally, we just need to tell it what device and capabilities we need.
+Testing on mobile devices is also important, but usually it is hard to do it locally because:
+
+- Mobile devices are expensive
+- Local labs do not work well in case employees are distributed
+
+That is why we implemented [BrowserStack](https://www.browserstack.com/) support.
+
+Running tests on BrowserStack is similar to ruining them locally, we just need to tell what device and capabilities we need.
 
 Configuration happens via environment variables:
 
