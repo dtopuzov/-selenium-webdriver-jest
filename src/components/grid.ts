@@ -3,9 +3,14 @@ import { UIComponent } from "./ui-component";
 import { Pager } from "./pager";
 import { EC } from "../selenium/conditions";
 import { Settings } from "../settings/settings";
+import { SortType } from "./enums";
 
 export class Grid extends UIComponent {
-    constructor(driver: ThenableWebDriver, locator = By.css(".k-grid"), protected parentElement?: WebElement) {
+    public static get Selector(): string {
+        return ".k-grid";
+    }
+
+    constructor(driver: ThenableWebDriver, locator = By.css(Grid.Selector), protected parentElement?: WebElement) {
         super(driver, locator, parentElement);
     }
 
@@ -36,23 +41,24 @@ export class Grid extends UIComponent {
         return await this.GetGridElement(locator, `Failed to find header with "${text}" text.`);
     }
 
-    public async HeaderSortType(text: string, exactMatch = true): Promise<string> {
+    public async HeaderSortType(text: string, exactMatch = true): Promise<SortType> {
         const rootElement = await this.HeaderByText(text, exactMatch);
         if ((await rootElement.findElements(By.css(".k-i-sort-asc-sm"))).length > 0) {
-            return "asc";
+            return SortType.Asc;
         } if ((await rootElement.findElements(By.css(".k-i-sort-desc-sm"))).length > 0) {
-            return "desc";
+            return SortType.Desc;
         }
         else {
-            return null;
+            return SortType.None;
         }
     }
 
-    public async GetSortOrder(text: string, exactMatch = true): Promise<string> {
+    public async GetSortOrder(text: string, exactMatch = true): Promise<number> {
         const locator = By.css(".k-sort-order");
         const rootElement = await this.HeaderByText(text, exactMatch);
         if ((await rootElement.findElements(locator)).length > 0) {
-            return (await rootElement.findElement(locator)).getText();
+            const element = await rootElement.findElement(locator);
+            return +(await element.getText());
         } else {
             return null;
         }

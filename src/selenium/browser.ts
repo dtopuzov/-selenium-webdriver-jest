@@ -90,14 +90,13 @@ export class Browser {
         return await this.driver.takeScreenshot();
     }
 
-    public async verifyNoAccessibilityViolations(cssSelector = "html", disableRules = ["color-contrast"]): Promise<void> {
-        const axe = new AxeBuilder(this.driver);
-        axe.include(cssSelector);
-        for (const rule of disableRules) {
-            axe.disableRules(rule);
-        }
+    public async getAccessibilityViolations(cssSelector = "html", disableRules = ["color-contrast"]): Promise<[]> {
+        await this.find(By.css(cssSelector));
+        const axe = new AxeBuilder(this.driver)
+            .include(cssSelector)
+            .disableRules(disableRules);
         const result = await axe.analyze();
-        expect(result.violations).toEqual([]);
+        return result.violations;
     }
 
     public async getErrorLogs(): Promise<string[]> {
