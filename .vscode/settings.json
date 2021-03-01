@@ -35,6 +35,7 @@
         "maskedtextbox",
         "multiselect",
         "numerictextbox",
+        "scrollable",
         "telerik",
         "textbox",
         "timepicker",
