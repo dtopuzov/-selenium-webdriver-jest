@@ -18,7 +18,7 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
-    await browser.verifyNoJSErrors();
+    expect(await browser.getErrorLogs()).toEqual([]);
 });
 
 afterAll(async () => {

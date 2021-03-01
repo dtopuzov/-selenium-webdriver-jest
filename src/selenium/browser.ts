@@ -99,7 +99,7 @@ export class Browser {
         return result.violations;
     }
 
-    public async getErrorLogs(): Promise<string[]> {
+    public async getErrorLogs(excludeList = ["favicon.ico"]): Promise<string[]> {
         const errors = [];
         const capabilities = (await (await this.driver).getCapabilities());
         const platform = capabilities.getPlatform().toLowerCase();
@@ -119,13 +119,9 @@ export class Browser {
             }
         }
 
-        return errors;
-    }
-
-    public async verifyNoJSErrors(excludeList = ["favicon.ico"]): Promise<void> {
-        const allErrors = await this.getErrorLogs();
+        // Filter errors
         const filteredErrors = [];
-        for (const entry of allErrors) {
+        for (const entry of errors) {
             for (const excludeItem of excludeList) {
                 const error = entry.indexOf(excludeItem) >= 0;
                 if (!error && filteredErrors.indexOf(entry) < 0) {
@@ -134,6 +130,7 @@ export class Browser {
                 }
             }
         }
-        expect(filteredErrors).toEqual([]);
+
+        return filteredErrors;
     }
 }
