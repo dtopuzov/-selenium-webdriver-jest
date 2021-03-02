@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/webdriverjs";
-import { By, Condition, ThenableWebDriver, until, WebElement } from "selenium-webdriver";
+import { By, ThenableWebDriver, until, WebElement, WebElementCondition } from "selenium-webdriver";
 import { Level, Type } from "selenium-webdriver/lib/logging";
-import { EC } from "./conditions";
+import { EC, WaitCondition } from "./conditions";
 import { DriverManager } from "./driver-manager";
 
 export class Browser {
@@ -25,12 +25,12 @@ export class Browser {
 
     public async find(locator: By, timeout = 10000): Promise<WebElement> {
         const element = await this.driver.wait(until.elementLocated(locator), timeout, `Failed to find element located by ${locator}.`);
-        await this.driver.wait(until.elementIsVisible(element));
 
         // Hack to handle Safari
-        const browserName = (await (await this.driver).getCapabilities()).getBrowserName().toLowerCase();
+        const capabilities = await this.driver.getCapabilities();
+        const browserName = capabilities.getBrowserName().toLowerCase();
         if (browserName == "safari") {
-            await this.driver.wait(async () => await element.getRect() != undefined);
+            await this.wait(async () => await element.getRect() != undefined);
         }
 
         return element;
@@ -68,11 +68,11 @@ export class Browser {
         return await this.waitSafely(EC.hasValue(element, value));
     }
 
-    public async wait(condition: () => Promise<boolean> | Condition<boolean>, timeout = 10000, message = undefined): Promise<void> {
+    public async wait(condition: WebElementCondition | WaitCondition, timeout = 10000, message = undefined): Promise<void> {
         await this.driver.wait(condition, timeout, message);
     }
 
-    public async waitSafely(condition: () => Promise<boolean> | Condition<boolean>, timeout = 10000): Promise<boolean> {
+    public async waitSafely(condition: WebElementCondition | WaitCondition, timeout = 10000): Promise<boolean> {
         try {
             await this.driver.wait(condition, timeout);
             return true;
