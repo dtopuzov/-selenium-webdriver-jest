@@ -1,11 +1,12 @@
 import { By, ThenableWebDriver, until, WebElement } from "selenium-webdriver";
+import { EC } from "../selenium/conditions";
 import { Settings } from "../settings/settings";
 
 export class UIComponent {
     constructor(protected driver: ThenableWebDriver, protected locator: By, protected parentElement?: WebElement) {
     }
 
-    protected async getElement(waitForVisible = true): Promise<WebElement> {
+    public async getRootElement(waitForVisible = true): Promise<WebElement> {
         if (this.parentElement != undefined) {
             const element = this.parentElement.findElement(this.locator);
             await this.driver.wait(until.elementIsVisible(element), Settings.timeout);
@@ -24,5 +25,12 @@ export class UIComponent {
             }
             return element;
         }
+    }
+
+    public async getElement(locator: By): Promise<WebElement> {
+        const rootElement = await this.getRootElement();
+        await this.driver.wait(EC.hasChild(rootElement, locator));
+        const childElement = rootElement.findElement(locator);
+        return this.driver.wait(until.elementIsVisible(childElement));
     }
 }

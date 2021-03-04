@@ -10,7 +10,7 @@ export class Pager extends UIComponent {
 
     public async getPageButton(text: string): Promise<WebElement> {
         const pageButtonLocator = By.xpath(`//li[.='${text}']`);
-        const element = await this.getElement();
+        const element = await this.getRootElement();
         await this.driver.wait(EC.hasChild(element, pageButtonLocator)
             , Settings.timeout
             , `Failed to find ${text} page.`);
