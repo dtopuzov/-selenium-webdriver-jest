@@ -42,7 +42,7 @@ export class DriverManager {
         const options = new FirefoxOptions();
         options.addArguments(`--width=${Settings.browserWidth}`);
         options.addArguments(`--height=${Settings.browserHeight}`);
-        options.setPreference("devtools.console.stdout.content", true);
+        options.setLoggingPrefs(logging.Level.SEVERE);
         if (Settings.headless) {
             options.headless();
         }
