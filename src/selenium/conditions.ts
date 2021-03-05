@@ -19,7 +19,7 @@ export class EC {
         return async (driver: WebDriver) => {
             const focused = await driver.switchTo().activeElement();
             return await element.getId() == await focused.getId();
-        }
+        };
     }
 
     public static hasChild(element: WebElement, locator: By): () => Promise<boolean> {
@@ -27,6 +27,6 @@ export class EC {
             return element.findElements(locator).then(result => {
                 return result.length > 0;
             });
-        }
+        };
     }
 }

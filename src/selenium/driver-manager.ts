@@ -27,7 +27,7 @@ export class DriverManager {
     private getChromeDriver(): ThenableWebDriver {
         require("chromedriver");
         const options = new ChromeOptions();
-        options.addArguments(`--window-size=${Settings.browserWidth},${Settings.browserHeight}`)
+        options.addArguments(`--window-size=${Settings.browserWidth},${Settings.browserHeight}`);
         if (Settings.headless) {
             options.headless();
         }
@@ -36,13 +36,13 @@ export class DriverManager {
 
     private getFirefoxDriver(): ThenableWebDriver {
         require("geckodriver");
-        const prefs = new logging.Preferences()
+        const prefs = new logging.Preferences();
         prefs.setLevel(logging.Type.BROWSER, logging.Level.ALL);
 
         const options = new FirefoxOptions();
         options.addArguments(`--width=${Settings.browserWidth}`);
         options.addArguments(`--height=${Settings.browserHeight}`);
-        options.setPreference("devtools.console.stdout.content", true);
+        options.setLoggingPrefs(logging.Level.SEVERE);
         if (Settings.headless) {
             options.headless();
         }
@@ -84,7 +84,7 @@ export class DriverManager {
             "name": BSSettings.buildName,
             "build": BSSettings.buildNumber,
             "nativeWebTap": "true"
-        }
+        };
 
         return new Builder().usingServer(url).withCapabilities(capabilities).build();
     }
