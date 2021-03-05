@@ -41,9 +41,8 @@ it("filter string column", async () => {
 });
 
 it("filter numeric column", async () => {
-    const input = await grid.HeaderCellInput(4);
-    await input.sendKeys(Key.chord(Key.CONTROL, "a", Key.DELETE));
-    await input.sendKeys(40);
+    await grid.HeaderCellCleanFilterButton(4).then(e => e.click());
+    await grid.HeaderCellInput(4).then(e => e.sendKeys(40));
     expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 1)).toBe(true);
 
     await grid.HeaderCellFilterDropDown(4).then(h => h.click());
