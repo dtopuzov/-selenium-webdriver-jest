@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "lint": "npx eslint src/**/*.ts",
+    "lint": "npx eslint src/**/*.ts tests/**/*.ts",
     "build": "npm run lint && npx tsc",
     "test:a11y": "npx jest tests/a11y",
     "test:e2e": "npx jest tests/e2e",

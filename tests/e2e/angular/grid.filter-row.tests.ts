@@ -52,12 +52,12 @@ it("filter numeric column", async () => {
     expect(await browser.waitSafely(async () => await grid.IsEmpty() == true)).toBe(true);
 
     await grid.HeaderCellFilterDropDown(4).then(h => h.click());
-    const pricePopup = new Popup(browser.driver)
+    const pricePopup = new Popup(browser.driver);
     await pricePopup.getListItem("Is greater than").then(e => e.click());
     expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 2)).toBe(true);
 
     await grid.HeaderCellFilterDropDown(5).then(h => h.click());
-    const boolPopup = new Popup(browser.driver)
+    const boolPopup = new Popup(browser.driver);
     await boolPopup.getListItem("Is True").then(e => e.click());
     expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 1)).toBe(true);
 });

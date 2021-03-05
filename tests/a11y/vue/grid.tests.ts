@@ -14,7 +14,7 @@ afterAll(async () => {
 
 it("sorting demo should be accessible", async () => {
     await browser.navigateTo(`${Config.vueUrl}/grid/examples/sorting/custom/?theme=default`);
-    const disableRules = ["aria-valid-attr-value", "scrollable-region-focusable"]
+    const disableRules = ["aria-valid-attr-value", "scrollable-region-focusable"];
     const errors = await browser.getAccessibilityViolations(Grid.Selector, disableRules);
     expect(errors).toEqual([]);
 });

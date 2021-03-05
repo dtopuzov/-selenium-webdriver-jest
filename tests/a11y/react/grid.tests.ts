@@ -14,7 +14,7 @@ afterAll(async () => {
 
 it("sorting demo should be accessible", async () => {
     await browser.navigateTo(`${Config.reactUrl}/grid/examples/sorting/?theme=material`);
-    const disableRules = ["aria-allowed-role", "presentation-role-conflict", "scrollable-region-focusable"]
+    const disableRules = ["aria-allowed-role", "presentation-role-conflict", "scrollable-region-focusable"];
     const errors = await browser.getAccessibilityViolations(Grid.Selector, disableRules);
     expect(errors).toEqual([]);
 });

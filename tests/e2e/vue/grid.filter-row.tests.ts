@@ -12,9 +12,9 @@ beforeAll(() => {
 });
 
 beforeEach(async () => {
-    await browser.navigateTo(`${Config.reactUrl}/grid/examples/filtering/?theme=material`);
+    await browser.navigateTo(`${Config.vueUrl}/grid/examples/filtering/basic/?theme=default`);
     grid = new Grid(browser.driver);
-    expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 2)).toBe(true);
+    expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 4)).toBe(true);
 });
 
 afterEach(async () => {
@@ -27,33 +27,28 @@ afterAll(async () => {
 
 it("filter string column", async () => {
     const input = await grid.HeaderCellInput(2);
-    expect(await input.getAttribute("value")).toEqual("Chef");
+    await input.sendKeys("Se");
+    expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 2)).toBe(true);
 
-    await input.click();
-    Array.from({ length: 4 }, async () => await input.sendKeys(Key.BACK_SPACE));
-    expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 10)).toBe(true);
-
-    await input.sendKeys("Aniseed" + Key.ENTER);
+    await input.sendKeys("a" + Key.ENTER);
     expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 1)).toBe(true);
 
-    await input.sendKeys("Drink" + Key.ENTER);
-    expect(await grid.IsEmpty()).toBe(true);
+    await input.sendKeys("a" + Key.ENTER);
+    expect(await browser.waitSafely(async () => await grid.IsEmpty() == true)).toBe(true);
+
+    await grid.HeaderCellCleanFilterButton(2).then(e => e.click());
+    expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 4)).toBe(true);
 });
 
 it("filter numeric column", async () => {
     const input = await grid.HeaderCellInput(4);
-    await input.sendKeys("21.35" + Key.ENTER);
+    await input.sendKeys(Key.chord(Key.CONTROL, "a", Key.DELETE));
+    await input.sendKeys(40);
     expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 1)).toBe(true);
-
-    await grid.HeaderCellCleanFilterButton(4).then(h => h.click());
-    expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 2)).toBe(true);
-
-    await input.sendKeys("10" + Key.ENTER);
-    expect(await grid.IsEmpty()).toBe(true);
 
     await grid.HeaderCellFilterDropDown(4).then(h => h.click());
     const pricePopup = new Popup(browser.driver);
-    await pricePopup.getListItem("Is greater than").then(e => e.click());
+    await pricePopup.getListItem("Is greater than or equal to").then(e => e.click());
     expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 2)).toBe(true);
 
     await grid.HeaderCellFilterDropDown(5).then(h => h.click());

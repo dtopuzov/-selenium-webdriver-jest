@@ -54,7 +54,7 @@ it("shift+tab should focus previous cell", async () => {
 });
 
 it("tab at last cell should navigate to next line", async () => {
-    let cell = await grid.Cell(1, 4)
+    let cell = await grid.Cell(1, 4);
     expect(await browser.hasText(cell, "39")).toBe(true);
     cell.click();
 
@@ -62,7 +62,7 @@ it("tab at last cell should navigate to next line", async () => {
     expect(await browser.hasFocus(input)).toBe(true);
 
     await browser.sendKey(Key.TAB);
-    cell = await grid.Cell(1, 5)
+    cell = await grid.Cell(1, 5);
     const button = await browser.findChild(cell, By.css(".k-button"));
     expect(await browser.hasFocus(button)).toBe(true);
 

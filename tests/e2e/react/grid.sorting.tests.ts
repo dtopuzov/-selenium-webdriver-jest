@@ -37,7 +37,7 @@ it("click header should change sort type", async () => {
     expect(await isDescending(await grid.CellsByColumn(2))).toBe(true);
 
     await header.click();
-    expect(await grid.HeaderSortType("Product Name")).toEqual(SortType.None)
+    expect(await grid.HeaderSortType("Product Name")).toEqual(SortType.None);
     expect(await (await grid.Cell(1, 2)).getText()).toEqual("Chai");
     expect(await (await grid.Cell(2, 2)).getText()).toEqual("Chang");
     expect(await (await grid.Cell(3, 2)).getText()).toEqual("Aniseed Syrup");

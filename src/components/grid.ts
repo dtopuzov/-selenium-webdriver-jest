@@ -95,14 +95,14 @@ export class Grid extends UIComponent {
     }
 
     public async HeaderCellFilterDropDown(column: number): Promise<WebElement> {
-        const defaultLocator = `thead tr td:nth-of-type(${column}) .k-dropdown`
+        const defaultLocator = `thead tr td:nth-of-type(${column}) .k-dropdown`;
         const reactLocator = `thead tr.k-filter-row th:nth-of-type(${column}) .k-dropdown`;
         const errorMessage = `Failed to find filter dropdown inside header cell at column ${column}.`;
         return await this.GetGridElement(By.css(`${defaultLocator}, ${reactLocator}`), errorMessage);
     }
 
     public async HeaderCellCleanFilterButton(column: number): Promise<WebElement> {
-        const defaultLocator = `thead tr td:nth-of-type(${column}) button[title='Clear']`
+        const defaultLocator = `thead tr td:nth-of-type(${column}) button[title='Clear']`;
         const reactLocator = `thead tr.k-filter-row th:nth-of-type(${column}) button[title='Clear']`;
         const errorMessage = `Failed to find clear filter button inside header cell at column ${column}.`;
         return await this.GetGridElement(By.css(`${defaultLocator}, ${reactLocator}`), errorMessage);
