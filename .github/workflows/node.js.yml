@@ -22,7 +22,7 @@ jobs:
       run: |
         export BROWSER_NAME=chrome
         export HEADLESS=true
-        npm run test:e2e -- --maxWorkers=4
+        npm run test:a11y -- --maxWorkers=4
         
   e2e-chrome:
     runs-on: windows-latest
