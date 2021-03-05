@@ -12,7 +12,7 @@ beforeAll(() => {
 });
 
 beforeEach(async () => {
-    await browser.navigateTo(`${Config.ngUrl}/grid/examples/filtering/basic/?theme=default`);
+    await browser.navigateTo(`${Config.reactUrl}/grid/examples/filtering/?theme=material`);
     grid = new Grid(browser.driver);
     expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 2)).toBe(true);
 });
@@ -31,13 +31,13 @@ it("filter string column", async () => {
 
     await input.click();
     Array.from({ length: 4 }, async () => await input.sendKeys(Key.BACK_SPACE));
-    expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 5)).toBe(true);
+    expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 10)).toBe(true);
 
     await input.sendKeys("Aniseed" + Key.ENTER);
     expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 1)).toBe(true);
 
     await input.sendKeys("Drink" + Key.ENTER);
-    expect(await browser.waitSafely(async () => await grid.IsEmpty() == true)).toBe(true);
+    expect(await grid.IsEmpty()).toBe(true);
 });
 
 it("filter numeric column", async () => {
@@ -49,7 +49,7 @@ it("filter numeric column", async () => {
     expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 2)).toBe(true);
 
     await input.sendKeys("10" + Key.ENTER);
-    expect(await browser.waitSafely(async () => await grid.IsEmpty() == true)).toBe(true);
+    expect(await grid.IsEmpty()).toBe(true);
 
     await grid.HeaderCellFilterDropDown(4).then(h => h.click());
     const pricePopup = new Popup(browser.driver)
@@ -58,6 +58,6 @@ it("filter numeric column", async () => {
 
     await grid.HeaderCellFilterDropDown(5).then(h => h.click());
     const boolPopup = new Popup(browser.driver)
-    await boolPopup.getListItem("Is True").then(e => e.click());
+    await boolPopup.getListItem("Is true").then(e => e.click());
     expect(await browser.waitSafely(async () => await grid.DataRowsCount() == 1)).toBe(true);
 });

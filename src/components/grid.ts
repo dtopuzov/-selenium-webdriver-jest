@@ -30,7 +30,7 @@ export class Grid extends UIComponent {
 
     public async IsEmpty(): Promise<boolean> {
         const rootElement = await this.getRootElement();
-        return (await rootElement.findElements(By.css(".k-grid-norecords"))).length == 0;
+        return (await rootElement.findElements(By.css(".k-grid-norecords"))).length == 1;
     }
 
     public async Header(column: number): Promise<WebElement> {
@@ -39,8 +39,10 @@ export class Grid extends UIComponent {
     }
 
     public async HeaderFilter(column: number): Promise<WebElement> {
-        const locator = By.css(`thead tr th:nth-of-type(${column}) .k-grid-filter`);
-        return await this.GetGridElement(locator, `Failed to find header at column ${column}.`);
+        const defaultLocator = `thead tr th:nth-of-type(${column}) .k-grid-filter`;
+        const reactLocator = `thead tr th:nth-of-type(${column}) span.k-i-more-vertical`;
+        const errorMessage = `Failed to find filter menu inside header at column ${column}.`;
+        return await this.GetGridElement(By.css(`${defaultLocator}, ${reactLocator}`), errorMessage);
     }
 
     public async HeaderByText(text: string, exactMatch = true): Promise<WebElement> {
@@ -79,23 +81,31 @@ export class Grid extends UIComponent {
     }
 
     public async HeaderCell(column: number): Promise<WebElement> {
-        const locator = By.css(`thead tr td:nth-of-type(${column})`);
-        return await this.GetGridElement(locator, `Failed to find header cell at column ${column}.`);
+        const defaultLocator = `thead tr td:nth-of-type(${column})`;
+        const reactLocator = `thead tr.k-filter-row th:nth-of-type(${column})`;
+        const errorMessage = `Failed to find header cell at column ${column}.`;
+        return await this.GetGridElement(By.css(`${defaultLocator}, ${reactLocator}`), errorMessage);
     }
 
     public async HeaderCellInput(column: number): Promise<WebElement> {
-        const locator = By.css(`thead tr td:nth-of-type(${column}) input`);
-        return await this.GetGridElement(locator, `Failed to find input inside header cell at column ${column}.`);
+        const defaultLocator = `thead tr td:nth-of-type(${column}) input`;
+        const reactLocator = `thead tr.k-filter-row th:nth-of-type(${column}) input`;
+        const errorMessage = `Failed to find input inside header cell at column ${column}.`;
+        return await this.GetGridElement(By.css(`${defaultLocator}, ${reactLocator}`), errorMessage);
     }
 
     public async HeaderCellFilterDropDown(column: number): Promise<WebElement> {
-        const locator = By.css(`thead tr td:nth-of-type(${column}) .k-dropdown`);
-        return await this.GetGridElement(locator, `Failed to find filter dropdown inside header cell at column ${column}.`);
+        const defaultLocator = `thead tr td:nth-of-type(${column}) .k-dropdown`
+        const reactLocator = `thead tr.k-filter-row th:nth-of-type(${column}) .k-dropdown`;
+        const errorMessage = `Failed to find filter dropdown inside header cell at column ${column}.`;
+        return await this.GetGridElement(By.css(`${defaultLocator}, ${reactLocator}`), errorMessage);
     }
 
     public async HeaderCellCleanFilterButton(column: number): Promise<WebElement> {
-        const locator = By.css(`thead tr td:nth-of-type(${column}) button[title='Clear']`);
-        return await this.GetGridElement(locator, `Failed to find clear filter button inside header cell at column ${column}.`);
+        const defaultLocator = `thead tr td:nth-of-type(${column}) button[title='Clear']`
+        const reactLocator = `thead tr.k-filter-row th:nth-of-type(${column}) button[title='Clear']`;
+        const errorMessage = `Failed to find clear filter button inside header cell at column ${column}.`;
+        return await this.GetGridElement(By.css(`${defaultLocator}, ${reactLocator}`), errorMessage);
     }
 
     public async Cell(row: number, column: number): Promise<WebElement> {
