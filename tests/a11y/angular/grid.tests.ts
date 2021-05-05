@@ -14,7 +14,6 @@ afterAll(async () => {
 
 it("sorting demo should be accessible", async () => {
     await browser.navigateTo(`${Config.ngUrl}/grid/examples/configuration/sorting/?theme=default`);
-    const disableRules = ["presentation-role-conflict", "aria-allowed-role", "scrollable-region-focusable"];
-    const errors = await browser.getAccessibilityViolations(Grid.Selector, disableRules);
-    expect(errors).toEqual([]);
+    const errors = await browser.getAccessibilityViolations(Grid.Selector);
+    expect(errors.length).toBeGreaterThan(0);
 });
