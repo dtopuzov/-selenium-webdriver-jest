@@ -11,7 +11,7 @@
     "test:e2e": "npx jest tests/e2e",
     "test:mobile": "npx jest tests/mobile",
     "test:visual": "npx jest tests/visual",
-    "pack": "rm -rf ./dist && npx cti create ./src && npm run build && node dist/setup.js && rm -rf dist/setup.* && cp LICENSE README.md dist && npm pack"
+    "pack": "rm -rf ./dist && npx cti create ./src && npm run build && node dist/setup.js && rm -rf dist/setup.* && cp LICENSE README.md dist && cd dist && npm pack"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/dtopuzov/kendo-driver#readme",
   "dependencies": {
+    "@types/selenium-webdriver": "4.0.12",
     "@axe-core/webdriverjs": "4.1.1",
     "chromedriver": "latest",
     "geckodriver": "latest",
@@ -46,7 +47,6 @@
     "@types/jest": "26.0.20",
     "@types/jest-image-snapshot": "4.3.0",
     "@types/node": "14.14.31",
-    "@types/selenium-webdriver": "4.0.12",
     "@typescript-eslint/eslint-plugin": "4.22.1",
     "@typescript-eslint/parser": "4.22.1",
     "create-ts-index": "1.13.6",
