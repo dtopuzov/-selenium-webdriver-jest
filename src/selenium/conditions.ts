@@ -36,7 +36,7 @@ export class EC {
                 const element = await driver.findElement(locator);
                 return await !element.isDisplayed();
             } catch {
-                return false;
+                return true;
             }
         };
     }
