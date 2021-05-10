@@ -58,6 +58,11 @@ export class Browser {
         await actions.contextClick(element).perform();
     }
 
+    public async drag(source: WebElement, target: WebElement): Promise<void> {
+        const actions = this.driver.actions({ async: true });
+        await actions.dragAndDrop(source, target).perform();
+    }
+
     public async type(element: WebElement, text: string, clear = true): Promise<void> {
         if (clear) {
             await element.clear();
