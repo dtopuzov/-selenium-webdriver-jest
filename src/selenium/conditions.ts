@@ -34,7 +34,7 @@ export class EC {
         return async (driver: WebDriver) => {
             try {
                 const element = await driver.findElement(locator);
-                return await element.isDisplayed();
+                return await !element.isDisplayed();
             } catch {
                 return false;
             }
