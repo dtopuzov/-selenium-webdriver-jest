@@ -29,4 +29,15 @@ export class EC {
             });
         };
     }
+
+    public static notVisible(locator: By): (driver: WebDriver) => Promise<boolean> {
+        return async (driver: WebDriver) => {
+            try {
+                const element = await driver.findElement(locator);
+                return await element.isDisplayed();
+            } catch {
+                return false;
+            }
+        };
+    }
 }

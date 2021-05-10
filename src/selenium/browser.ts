@@ -41,6 +41,23 @@ export class Browser {
         return rootElement.findElement(locator);
     }
 
+    public async click(locator: By, timeout = 10000): Promise<void> {
+        const element = await this.find(locator, timeout);
+        await element.click();
+    }
+
+    public async hover(locator: By, timeout = 10000): Promise<void> {
+        const element = await this.find(locator, timeout);
+        const actions = this.driver.actions({ async: true });
+        await actions.move({ origin: element }).perform();
+    }
+
+    public async contextClick(locator: By, timeout = 10000): Promise<void> {
+        const element = await this.find(locator, timeout);
+        const actions = this.driver.actions({ async: true });
+        await actions.contextClick(element).perform();
+    }
+
     public async type(element: WebElement, text: string, clear = true): Promise<void> {
         if (clear) {
             await element.clear();
@@ -54,6 +71,15 @@ export class Browser {
 
     public async sendKeyCombination(key1: string, key2: string): Promise<void> {
         await this.driver.actions().keyDown(key1).keyDown(key2).keyUp(key2).keyUp(key1).perform();
+    }
+
+    public async isVisible(locator: By, timeout = 10000): Promise<boolean> {
+        const element = await this.driver.wait(until.elementLocated(locator), timeout, `Failed to find element located by ${locator}.`);
+        return element.isDisplayed();
+    }
+
+    public async isNotVisible(locator: By): Promise<boolean> {
+        return await this.waitSafely(EC.notVisible(locator));
     }
 
     public async hasFocus(element: WebElement): Promise<boolean> {
