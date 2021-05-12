@@ -63,6 +63,11 @@ export class Browser {
         await actions.dragAndDrop(source, target).perform();
     }
 
+    public async dragByOffset(source: WebElement, offsetX: number, offsetY: number): Promise<void> {
+        const actions = this.driver.actions({ async: true });
+        await actions.dragAndDrop(source, { x: offsetX, y: offsetY }).perform();
+    }
+
     public async type(element: WebElement, text: string, clear = true): Promise<void> {
         if (clear) {
             await element.clear();
